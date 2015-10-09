@@ -1,0 +1,8 @@
+* Prise de notes informatisées
+
+Ce dépôt contient les fonctions d'aide à la prise de notes et à la retranscription.
+
+Elles sont propres à GNU/Emacs.
+
+Une documentation détaillée à ce propos sera hébergée sur [[http:stenopad.alwaysdata.net][Stenopad]]
+

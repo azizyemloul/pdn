@@ -1,0 +1,16 @@
+*
+!.emacs.el
+!.emacs-custom.el
+#!.tmux.conf
+#!.i3status.conf
+#!.bash_profile
+#!.bashrc
+#!.console-setup
+#!.gnus.el
+#!.inputrc
+#!.xinitrc
+#!.Xresources
+#!.gitignore
+#!.abbrev_defs
+!README
+
