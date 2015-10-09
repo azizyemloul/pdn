@@ -1,4 +1,4 @@
-* Prise de notes informatisées
+* Prise de notes informatisée
 
 Ce dépôt contient les fonctions d'aide à la prise de notes et à la retranscription.
 
