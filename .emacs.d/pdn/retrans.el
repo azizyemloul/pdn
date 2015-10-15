@@ -250,7 +250,7 @@ can be an integer or a string."
   (interactive)
   (setq
    current-b (current-buffer)
-   fichiers-audio (directory-files "." t "\\(wma\\|mp3\\|wav\\|WMA\\|MP3\\|WAV\\|flv\\|ogg\\|avi\\|wmv\\)$")
+   fichiers-audio (directory-files "." t "\\(wma\\|mp3\\|wav\\|WMA\\|MP3\\|WAV\\|flv\\|ogg\\|avi\\|wmv\\|mp4\\)$")
    fichiers-audio-déjà-répertoriés (org-map-entries
 				    (lambda ()
 				      (let (exist)

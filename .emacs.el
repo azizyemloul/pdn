@@ -53,7 +53,6 @@
 
 (load-library	"server")
 (load-library	"savehist")
-(load-library	"gnus")
 (load-library	"iso-transl")
 (load-library	"org-clock")
 (autoload	'volume "volume" "Tweak your sound card volume." t)
@@ -1584,10 +1583,13 @@ for the current buffer's file name, and the line number at point."
 (add-to-list 'load-path "/usr/share/git-core/emacs/")
 (require 'git)
 ;; * slime
-(setq inferior-lisp-program "~/Bureau/ccl/lx86cl64") 
+;(setq inferior-lisp-program "~/Bureau/ccl/lx86cl64") 
 ;; * stumpwm
-;(load "/home/aziz/.stumpwm.d/contrib/util/swm-emacs/stumpwm-mode.el")
+(load "/home/aziz/.stumpwm.d/contrib/util/swm-emacs/stumpwm-mode.el")
 ;; * grep $PATH into shell-command
 (setq shell-command-switch "-c")
 (require 'shell-command)
 (shell-command-completion-mode)
+;; * common lisp/quicklisp integration
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+(setq inferior-lisp-program "sbcl")
