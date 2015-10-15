@@ -736,7 +736,7 @@ recursively processing #+INCLUDEs."
   (interactive)
   (save-excursion
     (re-search-backward "&" nil nil)
-    (replace-match (char-to-string (read-char-exclusive "what character")))))
+    (replace-match (char-to-string (read-char-exclusive "what character" t)))))
 (global-set-key (kbd "C-c DEL") 'logik)
 
 ;; *** aziz-mail moved to credential.el
