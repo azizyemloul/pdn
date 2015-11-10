@@ -7,6 +7,7 @@
 ;; * P@THS & REQUIRES
 ;; ** REQUIRES
 
+;(require 'bookmark+)
 (require 'ffap)
 (require 'cl)
 (require 'calc)
@@ -15,11 +16,16 @@
 ;(require 'multi-term)
 ;(require 'auto-package-update)
 
+(add-to-list 'load-path "/home/aziz/Documents/release_8.2.10/contrib/lisp/")
+(require 'org-mime)
+
+
 (add-to-list 'load-path "~/.emacs.d/uniq/")
 (require 'mplayer-mode)
 ;(require 'edit-server)
 ;(require 'sunrise-commander)
 (require 'outlined-zall-mode)
+
 (add-to-list 'load-path "~/.emacs.d/addons/git-modes")
 (add-to-list 'load-path "~/.emacs.d/addons/magit")
 (require 'magit)
@@ -32,7 +38,20 @@
 ;(setq mls-modules '(cpu memory disk battery))
 ;; (setq mls-position :right)
 
+;; * elpa packages begins here
 (package-initialize)
+;; ** emacs as X window manager conf is here
+(require 'exwm)
+(require 'exwm-config)
+(exwm-config-default)
+;; *** Application launcher
+;; (exwm-input-set-key (kbd "s-&")
+;;                     (lambda (command)
+;;                       (interactive (list (read-shell-command "$ ")))
+;;                       (start-process-shell-command command nil command)))
+
+
+;; ** the rest of elpa packages stuff
 (require 'thingatpt)
 (require 'outlined-elisp-mode)
 ;(require 'langtool)
@@ -67,7 +86,7 @@
 (recentf-mode		1)
 (delete-selection-mode	1)
 (tool-bar-mode		0)
-(menu-bar-mode		0)
+(menu-bar-mode		1)
 (savehist-mode		1)
 ;(desktop-save-mode      1)
 (global-auto-revert-mode t)
@@ -78,7 +97,7 @@
 
 (add-to-list 'auto-mode-alist		'("\\.docx$"	. docx2txt))
 
-(setq 
+(setq
  blink-cursor-mode			t
  calendar-date-display-form		'(dayname " " day " " monthname " " year)
  column-number-mode			t
@@ -92,7 +111,7 @@
  edit-server-default-major-mode		'org-mode
  enable-recursive-minibuffers		t
  gc-cons-threshold			3500000
- inferior-lisp-program			"clisp" 
+ inferior-lisp-program			"clisp"
  langtool-language-tool-jar		"~/bin/langtool/languagetool-commandline.jar"
  langtool-mother-tongue			"fr"
  visible-bell				t
@@ -158,28 +177,29 @@
 (put 'dired-find-alternate-file 'disabled nil)
 
 ;; * HOOKS
-(add-hook 'flyspell-mode-hook			'(lambda () 
+(add-hook 'flyspell-mode-hook			'(lambda ()
 						   (define-key flyspell-mode-map (kbd "C-z") 'transpose-chars)
 						   (define-key flyspell-mode-map (kbd "C-c f") 'flyspell-buffer)
 						   (define-key flyspell-mode-map "œ" 'flyspell-goto-next-error)
 						   (define-key flyspell-mode-map (kbd "C-c v") 'ispell-word)
 						   ))
-;	  'append)
-(add-hook 'message-mode-hook			'(lambda () (local-set-key (kbd "C-c M-o") 'org-mime-htmlize)) 'append)
-;(add-hook 'message-mode-hook			(lambda () (local-set-key "\C-c\M-o" 'org-mime-htmlize)))
+
+
 (add-hook 'w3m-display-hook			(lambda (url) (let ((buffer-read-only nil)) (delete-trailing-whitespace))))
 
 
-;;(add-hook 'before-save-hook			'delete-trailing-whitespace)
+(add-hook 'before-save-hook			'delete-trailing-whitespace)
 (add-hook 'diary-display-hook			'fancy-diary-display)
 (add-hook 'emacs-lisp-mode-hook			'outlined-elisp-find-file-hook)
 (add-hook 'awk-mode-hook			'outlined-zall-find-file-hook)
 (add-hook 'outlined-elisp-find-file-hook	'outline-mode-map)
 
 ;(add-hook 'message-mode-hook			'bbdb-define-all-aliases 'append)
+
 (add-hook 'message-mode-hook			'orgstruct++-mode 'append)
 (add-hook 'message-mode-hook			'orgtbl-mode 'append)
 (add-hook 'message-mode-hook			'turn-on-flyspell 'append)
+(add-hook 'message-mode-hook			'(lambda () (local-set-key (kbd "C-c M-o") 'org-mime-htmlize)) 'append)
 
 (add-hook 'today-visible-calendar-hook		'calendar-mark-today)
 ;;(add-hook 'w3m-mode-hook			'w3m-add-keys)
@@ -875,7 +895,7 @@ recursively processing #+INCLUDEs."
 ;; *** docx2txt
 (defun docx2txt ()
   "Run docx2txt on the entire buffer."
-  (setq 
+  (setq
    a (buffer-name)
    b (file-name-sans-extension a)
    c (concat b ".org")
@@ -1098,10 +1118,11 @@ FLYSPELL-BUFFER."
 (global-set-key			(kbd "C-c d")		'backup-this-file)
 (global-set-key			(kbd "C-c h")		'helm-mini)
 (global-set-key			(kbd "C-h t")		'clients-tag-lookup)
-(global-set-key			(kbd "C-x C-f")		'helm-find-files)
-(global-set-key			(kbd "C-x f")		'find-file-as-root)
-;(global-set-key			(kbd "C-x C-f")		'set-fill-column)
-;(global-set-key			(kbd "C-x t")		'multi-term)
+;;(global-set-key			(kbd "C-x C-f")		'helm-find-files)
+(global-set-key			(kbd "C-x C-f")		'find-file)
+;;(global-set-key			(kbd "C-x f")		'find-file-as-root)
+;;(global-set-key			(kbd "C-x C-f")		'set-fill-column)
+;;(global-set-key			(kbd "C-x t")		'multi-term)
 (global-set-key			(kbd "C-x l")		'copy-location-to-clip)
 (global-set-key			(kbd "M-a")		'dabbrev-expand)
 (global-set-key			(kbd "C-x r M-%")	'my-replace-string-rectangle)
@@ -1126,7 +1147,7 @@ FLYSPELL-BUFFER."
 (define-key global-map		"\C-cx"			'xsteve-flip-windows)
 (define-key global-map		"\C-cw"			'google-search)
 (define-key global-map		"\C-cs"			'synonymes-search)
-(define-key global-map		"\C-xp"			'sr-speedbar-toggle)
+;(define-key global-map		"\C-xp"			'sr-speedbar-toggle)
 (define-key global-map		"\C-cm"			'gnus-no-server)
 (define-key global-map		"\C-cr"			'zaya)
 (define-key global-map		"\C-ck"			'helm-show-kill-ring)
@@ -1174,7 +1195,7 @@ FLYSPELL-BUFFER."
 ;; (global-set-key "\C-xlc" 'langtool-show-message-at-point)
 ;; (global-set-key "\C-xlx" 'langtool-correct-buffer)
 ;; ** W3M-SESSIONS-KEYS
-;(defun w3m-add-keys () 
+;(defun w3m-add-keys ()
 ;;   (define-key w3m-mode-map "S" 'w3m-session-save)
 ;;   (define-key w3m-mode-map "L" 'w3m-session-load))
 ;; * BBDB
@@ -1212,7 +1233,7 @@ FLYSPELL-BUFFER."
 			    (buffer-substring-no-properties b e)))
     (message-send-and-exit)))
 
-;; * asciify 
+;; * asciify
 
 (defun asciify-text (ξstring &optional ξfrom ξto)
 "Change some Unicode characters into equivalent ASCII ones.
@@ -1370,28 +1391,28 @@ When called in lisp code, if ξfrom is nil, returns a changed string, else, chan
 ;;     (goto-char (point-min)) (query-replace-regexp "\\<elle même\\>"  "elle-même")
 ;;     (goto-char (point-min)) (query-replace-regexp "\\<cendre\\>"  "vendre")
 
-;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<les \\([^ 
+;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<les \\([^
 ;; ;; ]*[^\\(
 ;; ;; \\|er\\|ir\\|ez\\|endre\\|s\\|x\\|it\\)0-9]\\)\\>"  "les \\1s")
-;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<des \\([^ 
+;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<des \\([^
 ;; ;; ]*[^\\(
 ;; ;; \\|er\\|ir\\|ez\\|endre\\|s\\|x\\|it\\)0-9]\\)\\>"  "des \\1s")
-;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<mes \\([^ 
+;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<mes \\([^
 ;; ;; ]*[^\\(
 ;; ;; \\|er\\|ir\\|ez\\|endre\\|s\\|x\\|it\\)0-9]\\)\\>"  "mes \\1s")
-;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<tes \\([^ 
+;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<tes \\([^
 ;; ;; ]*[^\\(
 ;; ;; \\|er\\|ir\\|ez\\|endre\\|s\\|x\\|it\\)0-9]\\)\\>"  "tes \\1s")
-;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<ses \\([^ 
+;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<ses \\([^
 ;; ;; ]*[^\\(
 ;; ;; \\|er\\|ir\\|ez\\|endre\\|s\\|x\\|it\\)0-9]\\)\\>"  "ses \\1s")
-;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<leurs \\([^ 
+;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<leurs \\([^
 ;; ;; ]*[^\\(
 ;; ;; \\|er\\|ir\\|ez\\|endre\\|s\\|x\\|it\\)0-9]\\)\\>"  "leurs \\1s")
-;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<nos \\([^ 
+;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<nos \\([^
 ;; ;; ]*[^\\(
 ;; ;; \\|er\\|ir\\|ez\\|endre\\|s\\|x\\|it\\)0-9]\\)\\>"  "nos \\1s")
-;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<vos \\([^ 
+;; ;;     (goto-char (point-min)) (query-replace-regexp "\\<vos \\([^
 ;; ;; ]*[^\\(
 ;; ;; \\|er\\|ir\\|ez\\|endre\\|s\\|x\\|it\\)0-9]\\)\\>"  "vos \\1s")
 
@@ -1487,13 +1508,13 @@ When called in lisp code, if ξfrom is nil, returns a changed string, else, chan
 
 
 ;; ** M-x pour droitier altG-!
-(global-set-key (kbd "¡") 'execute-extended-command) 
+(global-set-key (kbd "¡") 'execute-extended-command)
 (global-set-key "÷" ctl-x-map)
 ;; * entourer la selection de tags
-(defun entour (start end)                                         
+(defun entour (start end)
   "Copy to the kill ring a string in the format \"file-name:line-number\"
-for the current buffer's file name, and the line number at point."      
-  (interactive "r")                                                         
+for the current buffer's file name, and the line number at point."
+  (interactive "r")
   (goto-char end)
   (insert "@@html:</span>@@")
   (goto-char start)
@@ -1583,7 +1604,7 @@ for the current buffer's file name, and the line number at point."
 (add-to-list 'load-path "/usr/share/git-core/emacs/")
 (require 'git)
 ;; * slime
-;(setq inferior-lisp-program "~/Bureau/ccl/lx86cl64") 
+;(setq inferior-lisp-program "~/Bureau/ccl/lx86cl64")
 ;; * stumpwm
 (load "/home/aziz/.stumpwm.d/contrib/util/swm-emacs/stumpwm-mode.el")
 ;; * grep $PATH into shell-command
@@ -1593,3 +1614,41 @@ for the current buffer's file name, and the line number at point."
 ;; * common lisp/quicklisp integration
 (load (expand-file-name "~/quicklisp/slime-helper.el"))
 (setq inferior-lisp-program "sbcl")
+;; * display apostrophe in stanford courses transcript
+(standard-display-ascii ?\222 [?'])
+(standard-display-ascii ?\223 [?\"])
+(standard-display-ascii ?\224 [?\"])
+(standard-display-ascii ?\226 [?-])
+
+
+;; * findtop
+;; [[gnus:nnimap%2Bgmail:org-mode#87si568pk8.fsf@gmail.com][Email from Myles English: Re: {O} Return Top-Level Headi]]
+;; > Is there a way to reference the top-level heading that a lower-level
+;; > heading belongs to? For instance:
+;; >
+;; > * One
+;; > ** Two
+;; > *** Three
+;; >
+;; > If I have "Three", how can I get it to tell me that the top-level is "One"?
+;; > For reference, this is for an org-agenda-prefix.
+
+;; Perhaps this:
+
+(defun findTop()
+    (interactive)
+    (let* ((tree (org-element-parse-buffer))
+           (curs_pos (point))
+           (up_tree (org-element-map tree 'headline
+                      (lambda (hl)
+                        (and (> curs_pos (org-element-property :begin hl))
+                             (= (org-element-property :level hl) 1)
+                             (org-element-property :raw-value hl) ))))
+           (local_up_tree (last up_tree)))
+      local_up_tree))
+
+;;Myles
+;; * powerline
+(require 'powerline)
+;(powerline-default-theme)
+(powerline-center-theme)

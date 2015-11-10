@@ -4,6 +4,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(TeX-modes (quote (tex-mode plain-tex-mode latex-mode doctex-mode)))
+ '(ansi-color-faces-vector
+   [default default default italic underline success warning error])
  '(auto-insert-alist
    (quote
     ((("\\.\\([Hh]\\|hh\\|hpp\\)\\'" . "C / C++ header")
@@ -339,7 +341,7 @@ The document was typeset with
  '(csv-separators (quote ("	")))
 '(custom-safe-themes
 (quote
- ("7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" "e8a9dfa28c7c3ae126152210e3ccc3707eedae55bdc4b6d3e1bb3a85dfb4e670" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "28ec8ccf6190f6a73812df9bc91df54ce1d6132f18b4c8fcc85d45298569eb53" "7356632cebc6a11a87bc5fcffaa49bae528026a78637acd03cae57c091afd9b9" "c006bc787154c31d5c75e93a54657b4421e0b1a62516644bd25d954239bc9933" "ad24ea739f229477ea348af968634cb7a0748c9015110a777c8effeddfa920f5" "04dd0236a367865e591927a3810f178e8d33c372ad5bfef48b5ce90d4b476481" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
+ ("9f6750057fefba39c184783c7b80ddd9c63bc6e8064846b423b4362c9e930404" "fbcdb6b7890d0ec1708fa21ab08eb0cc16a8b7611bb6517b722eba3891dfc9dd" "8e7ca85479dab486e15e0119f2948ba7ffcaa0ef161b3facb8103fb06f93b428" "0ec59d997a305e938d9ec8f63263a8fc12e17990aafc36ff3aff9bc5c5a202f0" "6ffef0161169e444b514a0f7f0cb7eac09d11c396cdc99bf85360a361c427886" "7153b82e50b6f7452b4519097f880d968a6eaf6f6ef38cc45a144958e553fbc6" "e8a9dfa28c7c3ae126152210e3ccc3707eedae55bdc4b6d3e1bb3a85dfb4e670" "ab04c00a7e48ad784b52f34aa6bfa1e80d0c3fcacc50e1189af3651013eb0d58" "a0feb1322de9e26a4d209d1cfa236deaf64662bb604fa513cca6a057ddf0ef64" "28ec8ccf6190f6a73812df9bc91df54ce1d6132f18b4c8fcc85d45298569eb53" "7356632cebc6a11a87bc5fcffaa49bae528026a78637acd03cae57c091afd9b9" "c006bc787154c31d5c75e93a54657b4421e0b1a62516644bd25d954239bc9933" "ad24ea739f229477ea348af968634cb7a0748c9015110a777c8effeddfa920f5" "04dd0236a367865e591927a3810f178e8d33c372ad5bfef48b5ce90d4b476481" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" default)))
  '(dabbrev-ignored-buffer-names (quote ("*Buffer List*")))
  '(delete-by-moving-to-trash nil)
  '(desktop-path (quote ("~/.emacs.d/desktops")))
@@ -365,6 +367,8 @@ The document was typeset with
  '(google-translate-default-target-language "fr")
  '(help-window-select t)
  '(history-length t)
+ '(ido-enable-flex-matching t)
+ '(ido-ignore-buffers (quote ("\\` " "\\*helm")))
  '(inferior-lisp-program "clisp" t)
  '(inhibit-default-init t)
  '(inhibit-startup-screen t)
@@ -376,6 +380,7 @@ The document was typeset with
  '(iswitchb-mode nil)
  '(jde-compiler (quote ("javac server" "/usr/lib/jvm/jdk1.7.0/bin/javac")))
  '(jde-jdk-registry (quote (("1.6.0" . "/usr/lib/jvm/jdk1.7.0"))))
+ '(jdee-server-dir "~/workspace/Assignment1/")
  '(langtool-default-language "fr")
  '(list-directory-brief-switches "--group-directories-first -CFh")
  '(list-directory-verbose-switches "--group-directories-first -lh")
@@ -405,7 +410,14 @@ The document was typeset with
  '(org-archive-location "~/org/archive.org::* Depuis %s")
  '(org-attach-method (quote mv))
  '(org-attach-store-link-p (quote attached))
- '(org-babel-load-languages (quote ((emacs-lisp . t) (sh . t) (sql . t) (awk . t))))
+'(org-babel-load-languages
+(quote
+ ((emacs-lisp . t)
+  (sh . t)
+  (sql . t)
+  (awk . t)
+  (C . t)
+  (python . t))))
 '(org-capture-templates
 (quote
  (("w" "Default template" entry
@@ -490,6 +502,8 @@ The document was typeset with
  '(org-refile-use-cache t)
  '(org-refile-use-outline-path t)
  '(org-scheduled-string "SCHEDULED:")
+ '(org-src-preserve-indentation t)
+ '(org-src-window-setup (quote current-window))
  '(org-startup-folded (quote content))
  '(org-support-shift-select t)
  '(org-time-stamp-custom-formats (quote ("<%a %d-%m-%y>" . "<%a %d-%m-%y %H:%M>")))
@@ -562,6 +576,10 @@ The document was typeset with
  '(uce-mail-reader (quote gnus))
  '(uniquify-buffer-name-style (quote post-forward-angle-brackets) nil (uniquify))
  '(visible-bell t)
+'(w3m-antenna-sites
+(quote
+ (("http://tychoish.com/" "tychoish – Visits, Modes, and Forms — tychoish" nil)
+  ("https://github.com/ch11ng/exwm/wiki" "Home · ch11ng/exwm Wiki · GitHub" nil))))
  '(w3m-cookie-accept-bad-cookies t)
  '(w3m-default-display-inline-images nil)
  '(w3m-home-page "http://localhost")
@@ -579,6 +597,8 @@ The document was typeset with
  '(flyspell-duplicate ((t (:background "black" :foreground "green" :underline t :weight bold))))
  '(flyspell-incorrect ((t (:foreground "red" :underline t))))
  '(gnus-cite-1 ((t (:foreground "cyan"))))
+ '(gnus-summary-normal-ancient ((t (:foreground "orange red" :weight normal))))
+ '(gnus-summary-normal-unread ((t (:foreground "dim gray" :weight normal))))
  '(highlight ((t (:background "cyan"))))
  '(message-header-cc ((t (:foreground "brightgreen"))))
  '(message-header-subject ((t (:foreground "brightgreen" :weight bold))))
@@ -586,7 +606,7 @@ The document was typeset with
  '(org-footnote ((t (:foreground "red" :underline t))))
  '(org-level-1 ((t (:inherit outline-1 :foreground "blue" :weight normal))))
  '(org-level-2 ((t (:inherit outline-2 :weight bold))))
- '(org-level-3 ((t (:inherit outline-3 :foreground "brightyellow"))))
+ '(org-level-3 ((t (:inherit outline-3 :foreground "brightred"))))
  '(org-level-4 ((t (:inherit outline-4 :foreground "magenta"))))
  '(org-level-5 ((t (:inherit outline-5 :foreground "yellow"))))
  '(org-link ((t (:inherit link :foreground "cyan" :slant oblique)))))
