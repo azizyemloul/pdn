@@ -1,24 +1,29 @@
+;; * Facturation à vide
+
 ;; * Facturation
 (defun fac()
   "Remplir le formulaire PDF de la facture à partir des informations sur la mission"
   (interactive)
 ;; ** cacluls
-  (setq 
+  (setq
    client		(if (looking-at org-complex-heading-regexp) (setq leff (substring (substring-no-properties (match-string 5)) 1 -1)))
    facture_n		(org-entry-get nil "facture_n")
-   pu_m2_text		(org-entry-get nil "TARIF")
+   pu_m2_text		(or (org-entry-get nil "TARIF") "45")
    periode		(org-entry-get nil "periode")
-   m1			(org-entry-get nil "m1")
-   facture_date		(format-time-string "%d-%m-%Y")
+   m1			(or (org-entry-get nil "m1") "Retranscription")
+   facture_date		(or (org-entry-get nil "emic") (format-time-string "%d-%m-%Y"))
 
-   temps_retrans_s	(apply '+
-			       (mapcar (lambda (x)
-					 (if (string= x "nil")
-					     (setq x 0))
-					 (org-time-string-to-seconds x))
-				       (org-map-entries (lambda()
-							  (let(z) (setq z (org-entry-get nil "Effort")))
-							  ))))
+   temps_retrans_s	(apply '+ ;;; faire la somme des secondes ENTIER
+			       (mapcar
+				(lambda (x) ;;; convertir les Efforts récoltés ci-dessous en secondes ou en 0 si aucun LIST
+				  (if (string= x "nil") (setq x 0))
+				  (org-time-string-to-seconds x)
+				  )
+				(org-map-entries ;;; Rassembler tous les Efforts LIST
+				 (lambda()
+				   (let(z) (setq z (org-entry-get nil "Effort")))))
+				)
+			       )
 
    temps_retrans_string (org-time-seconds-to-string temps_retrans_s)
 
@@ -48,7 +53,7 @@
     (goto-char (point-min))
     (search-forward client)
     (org-narrow-to-subtree)
-    (setq 
+    (setq
      client_nom			(org-entry-get nil "client_nom")
      client_adress		(org-entry-get nil "client_adress")
      client_ville		(org-entry-get nil "client_ville")
@@ -70,7 +75,7 @@
 ;; ** formulaire
 
   (with-temp-buffer
-    (insert 
+    (insert
      "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n
 <xfdf xmlns=\"http://nous.adobe.com/xfdf/\" xml:space=\"default\">\n
 <fields>\n")
@@ -79,7 +84,7 @@
      valueon	"\"><value>"
      recordoff	"</value></field>"
      )
-    (insert 
+    (insert
      (concat	recordon	"client_nom"		valueon		client_nom		recordoff "\n")
      (concat 	recordon	"client_adress"	 	valueon		client_adress	     	recordoff "\n")
      (concat 	recordon	"client_ville"	 	valueon		client_ville	     	recordoff "\n")
@@ -88,7 +93,7 @@
      (concat 	recordon	"client_interlocuteur"  valueon		client_interlocuteur	recordoff "\n")
      (concat 	recordon	"facture_n"		valueon		facture_n		recordoff "\n")
      (concat 	recordon	"facture_date" 		valueon		facture_date 	     	recordoff "\n")
-     (concat 	recordon	"m1"	     		valueon		m1	     	     	recordoff "\n")  
+     (concat 	recordon	"m1"	     		valueon		m1	     	     	recordoff "\n")
      (concat 	recordon	"quantite_m2"  		valueon		quantite_m2_text     	recordoff "\n")
      (concat 	recordon	"m2"	     		valueon		m2	     	     	recordoff "\n")
      (concat 	recordon	"pu_m2"	     		valueon		pu_m2_text     	     	recordoff "\n")
@@ -368,19 +373,19 @@
 ;; * aAnalyser
 (defun ht(s ta op)
   "HT prend en argument un nombre de secondes (s) et une expression string"
-  (setq 
+  (setq
    unite (/ s 3600.00)
    ;;ta ;;(if (org-entry-get nil "FAC_Taux") (string-to-number (org-entry-get nil "FAC_Taux")) 45.0)
    saltaux (if (org-entry-get nil "SAL_Taux") (string-to-number (org-entry-get nil "SAL_Taux")) 25.0)
    facture_ht (* ta unite)
-   facture_tva (* 0.2 (* ta unite)) 
+   facture_tva (* 0.2 (* ta unite))
    facture_ttc (* 1.2 (* ta unite))
    facture_net (/ (* ta unite) 2.041639)
-   
+
    salaire_brut (* saltaux unite)
    salaire_net1 (* (* saltaux unite) 0.83)
    conge (/ (* salaire_brut 10) 100)
-   primvaca (* (+ salaire_brut conge) (/ 4.0 100)) 
+   primvaca (* (+ salaire_brut conge) (/ 4.0 100))
    base (+ salaire_brut conge primvaca)
    char-sala (* base 0.21273463378726537)
    char-patro (* base 0.42602816287026807)
@@ -388,7 +393,7 @@
    salaire_net2 (- base char-sala)
    salaire_impot (* salaire_net2 0.14)
    )
-  (cond 
+  (cond
    ((string= op "un")  unite)
    ((string= op "facht")  facture_ht)
    ((string= op "factva") facture_tva)
@@ -404,11 +409,11 @@
   )
 
 (defun gaph(x)
-  "X est un string. GAPH cherche une formule de type HH:MM-HH:MM dans X, calcul 
+  "X est un string. GAPH cherche une formule de type HH:MM-HH:MM dans X, calcul
 la durée entre les deux horaires et retourne une liste (secondes \"HH:MM:SS\")
 
-Exemple: 
- (gaph \"20:00-22:30\") 
+Exemple:
+ (gaph \"20:00-22:30\")
 
  -->(9000 \"02:30:00\")
 "
@@ -430,11 +435,11 @@ Exemple:
   )
 
 (defun toSeconds(x)
-  "X est un string. GAPH cherche une formule de type HH:MM-HH:MM dans X, calcul 
+  "X est un string. GAPH cherche une formule de type HH:MM-HH:MM dans X, calcul
 la durée entre les deux horaires et retourne une liste (secondes \"HH:MM:SS\")
 
-Exemple: 
- (gaph \"20:00-22:30\") 
+Exemple:
+ (gaph \"20:00-22:30\")
 
  -->(9000 \"02:30:00\")
 "
@@ -457,7 +462,7 @@ Exemple:
 (defun whatefort()
   (with-current-buffer (buffer-name)
     (org-entry-get nil "Effort")
-    ) 
+    )
   )
 
 ;; * MULTI BDC
@@ -539,7 +544,7 @@ Exemple:
       (setq ensemble (org-entry-properties))
       (kill-buffer)
       )
-  
+
     (with-temp-buffer
       (insert "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<xfdf xmlns=\"http://nous.adobe.com/xfdf/\" xml:space=\"default\">\n<fields>\n")
       (mapcar (lambda(malist)
@@ -617,13 +622,13 @@ Exemple:
   ;; 						  (let(z)
   ;; 						    (if (looking-at org-complex-heading-regexp)
   ;; 							(setq z (substring-no-properties (match-string 4)))))) nil 'tree))
-	    
+
   ;; 	    etude-arbre mission-list)
   ;;     ;; POUR CHAQUE MISSION
   ;;     (while missions-list
   ;; 	(setq current-mission (pop missions-list))
   ;; 	(search-forward current-mission)
-	
+
   ;; 	(if (string-match duration-regexp current-mission)		(setq temps-list (gaph current-mission)))
   ;; 	(if (not (string-match duration-regexp current-mission))	(setq temps-list (list (org-time-string-to-seconds (whatefort)) (whatefort))))
   ;; 	(if (not (whatefort))						(org-entry-put nil duration-property-string  (nth 1 temps-list)))
@@ -633,8 +638,8 @@ Exemple:
   ;;     ;; RETOUR À L'ÉTUDE
   ;;     (dd)
   ;;     (search-forward current-etude-heading)
-      
-      
+
+
   ;;     (org-entry-put nil duration-property-string (org-time-seconds-to-string current-etude-time-sum))
   ;;     (org-entry-put nil "FAC_Taux"	(number-to-string (read-from-minibuffer (concat "Tarif horaire pour " current-etude-heading " : ") "45.0" nil t nil "45.0")))
   ;;     (org-entry-put nil "UNIT"		(format "%.2f"	(ht current-etude-time-sum "un")))
@@ -643,7 +648,7 @@ Exemple:
   ;;     (org-entry-put nil "FAC_TTC"	(format "%.2f"	(ht current-etude-time-sum "facttc")))
   ;;     (org-entry-put nil "FAC_NET"	(format "%.2f"	(ht current-etude-time-sum "facnet")))
   ;;     (setq ttoo (org-entry-get nil "FAC_Taux"))
-      
+
   ;;     ;; POUR CHAQUE MISSION
   ;;     (while etude-arbre
   ;; 	(search-forward (pop etude-arbre))
@@ -655,8 +660,8 @@ Exemple:
   ;; 	(org-entry-put nil "FAC_TTC"  (format "%.2f" (ht (org-time-string-to-seconds (whatefort)) "facttc")))
   ;; 	)
   ;;     )
-  ;;   ;; POUR L'ENSEMBLE 
-    
+  ;;   ;; POUR L'ENSEMBLE
+
   ;;   )
   ;; )
 
@@ -696,18 +701,18 @@ Exemple:
 ;; 				      (if (looking-at org-complex-heading-regexp)
 ;; 					  (setq w (substring-no-properties (match-string 4)))))
 ;; 				    ) "+ET"))
-    
+
 ;;     (message "%S" etudes)
 ;;     (dd)
 ;;     (while etudes
 ;;       (setq counter (+ 1 counter)
 ;; 	    etude (pop etudes))
-      
+
 ;;       (search-forward etude)
 ;;       (setq reference (org-map-entries (lambda()
 ;; 					 (let(z)
 ;; 					   (if (looking-at org-complex-heading-regexp)
-;; 					       (setq z (substring-no-properties (match-string 4)))))) nil 'tree)    
+;; 					       (setq z (substring-no-properties (match-string 4)))))) nil 'tree)
 ;; 	    mission (pop reference)
 ;; 	    total-temps 0
 ;; 	    dates '())
@@ -717,11 +722,11 @@ Exemple:
 
 
 ;;       (save-excursion
-;; 	(while reference 
+;; 	(while reference
 ;; 	  (setq ref (pop reference))
 
 ;; 	  (if (string-match "\\([0-9]\\{2\\}\\):\\([0-9]\\{2\\}\\)-\\([0-9]\\{2\\}\\):\\([0-9]\\{2\\}\\)" ref)
-;; 	      (progn 
+;; 	      (progn
 ;; 		(with-temp-buffer
 ;; 		  (insert ref)
 ;; 		  (dd)
@@ -740,7 +745,7 @@ Exemple:
 ;; 		(dd)
 ;; 		(search-forward ref)
 ;; 		(org-entry-put nil "Effort" effort))
-;; 	    (if (not (string= (org-entry-get nil "Effort") "nil")) 
+;; 	    (if (not (string= (org-entry-get nil "Effort") "nil"))
 ;; 		(setq total-temps (+ (org-time-string-to-seconds (org-entry-get nil "Effort")) total-temps))
 ;; 	      (org-entry-put nil "Effort" "0")))
 ;; 	  )
@@ -778,14 +783,14 @@ Exemple:
 
 ;; * multiSalaire
 
-(defun multisalaire()    
+(defun multisalaire()
   (interactive)
-  (save-excursion 
-    (setq 
+  (save-excursion
+    (setq
      etude-tag "+ET"
      duration-regexp "\\([0-9]\\{2\\}\\):\\([0-9]\\{2\\}\\)-\\([0-9]\\{2\\}\\):\\([0-9]\\{2\\}\\)"
      duration-property-string "Effort"
-     etudes-headings (org-map-entries 
+     etudes-headings (org-map-entries
 		      (lambda()
 			(let(w)
 			  (if (looking-at org-complex-heading-regexp)
@@ -796,28 +801,28 @@ Exemple:
 	    current-etude-time-sum 0)
       (dd)
       (search-forward current-etude-heading)
-      (setq etude-arbre (org-map-entries 
+      (setq etude-arbre (org-map-entries
 			 (lambda()
 			   (let(z)
 			     (if (looking-at org-complex-heading-regexp)
 				 (setq z (substring-no-properties (match-string 4)))))) nil 'tree)
-	    
+
 	    garbage-etude-heading (pop etude-arbre)
 	    missions-list etude-arbre)
       ;; POUR CHAQUE MISSION
       (while missions-list
 	(setq current-mission (pop missions-list))
 	(search-forward current-mission)
-	(if (string-match duration-regexp current-mission) 
+	(if (string-match duration-regexp current-mission)
 	    (setq temps-list (gaph current-mission)))
 	(if (not (string-match duration-regexp current-mission))
 	    (setq temps-list (list (org-time-string-to-seconds (whatefort)) (whatefort))))
-	
+
 	(if (not (whatefort))
 	    (org-entry-put nil duration-property-string  (nth 1 temps-list)))
 	(if (not (string= (whatefort) (nth 1 temps-list)))
 	    (org-entry-put nil "WARNING"  (nth 1 temps-list)))
-	
+
 	(setq current-etude-time-sum (+ (nth 0 temps-list) current-etude-time-sum))
 	)
       ;; POUR CHAQUE ÉTUDE
@@ -844,7 +849,7 @@ Exemple:
 	(org-entry-put nil "SAL_IMPOT"   (format "%.2f" (ht (org-time-string-to-seconds (whatefort)) "impot")))
 	)
       )
-    ;; POUR L'ENSEMBLE 
+    ;; POUR L'ENSEMBLE
     )
   )
 
@@ -869,25 +874,25 @@ Exemple:
   (+ (* hour 3600) (* min 60) sec))
 ;; * junk
 ;; (
-;;  ("Etude Nesquick prise de notes"		27000	45.0	7.5	337.5	67.5	405.0	165.3083625459741) 
-;;  ("Etude Nesquick mise à plat"			3600	50.0	1.0	45.0	9.0	54.0	22.04111500612988) 
-;;  ("Etude Camembert Algérie mise à plat"		3600	2300.0	1.0	45.0	9.0	54.0	22.04111500612988) 
+;;  ("Etude Nesquick prise de notes"		27000	45.0	7.5	337.5	67.5	405.0	165.3083625459741)
+;;  ("Etude Nesquick mise à plat"			3600	50.0	1.0	45.0	9.0	54.0	22.04111500612988)
+;;  ("Etude Camembert Algérie mise à plat"		3600	2300.0	1.0	45.0	9.0	54.0	22.04111500612988)
 ;;  ("Etude Cantal prise de notes"			12600	45.0	3.5	157.5	31.5	189.0	77.14390252145458)
 ;;  )
 
 
 ;; (
-;;  ("Etude Nesquick prise de notes"		27000	7.5	337.5	67.5	405.0	165.3083625459741) 
-;;  ("Etude Nesquick mise à plat"			3600	1.0	150.0	30.0	180.0	73.47038335376627) 
-;;  ("Etude Camembert Algérie mise à plat"		3600	1.0	2300.0	460.0	2760.0	1126.5458780910826)	
+;;  ("Etude Nesquick prise de notes"		27000	7.5	337.5	67.5	405.0	165.3083625459741)
+;;  ("Etude Nesquick mise à plat"			3600	1.0	150.0	30.0	180.0	73.47038335376627)
+;;  ("Etude Camembert Algérie mise à plat"		3600	1.0	2300.0	460.0	2760.0	1126.5458780910826)
 ;;  ("Etude Cantal prise de notes"			12600	3.5	157.5	31.5	189.0	77.14390252145458)
 ;;  )
 
 
 ;; (						prix_u	nbr	ht	tva	ttc	net
-;;  ("Etude Nesquick prise de notes"	27000	45.0	7.5	337.5	67.5	405.0	165.3083625459741) 
-;;  ("Etude Nesquick mise à plat"		3600	150.0	1.0	150.0	30.0	180.0	73.47038335376627) 
-;;  ("Etude Camembert Algérie mise à plat" 3600	2300.0	1.0	2300.0	460.0	2760.0	1126.5458780910826) 
+;;  ("Etude Nesquick prise de notes"	27000	45.0	7.5	337.5	67.5	405.0	165.3083625459741)
+;;  ("Etude Nesquick mise à plat"		3600	150.0	1.0	150.0	30.0	180.0	73.47038335376627)
+;;  ("Etude Camembert Algérie mise à plat" 3600	2300.0	1.0	2300.0	460.0	2760.0	1126.5458780910826)
 ;;  ("Etude Cantal prise de notes"		12600	45.0	3.5	157.5	31.5	189.0	77.14390252145458)
 ;; )
 
@@ -908,14 +913,14 @@ Exemple:
 ;; (format-time-string "%d-%m-%Y" (current-time))
 
 ;; (format-time-string "%d-%m" (days-to-time (time-to-day-in-year (date-to-time "2014-06-18 mer."))))
-;; (format-time-string "%d-%m" (days-to-time (time-to-day-in-year 
+;; (format-time-string "%d-%m" (days-to-time (time-to-day-in-year
 
 ;; (format-time-string "%d-%m" (date-to-time "2014-06-18 mer."))
 
 
 
 ;; (mapcar (lambda(ßßßß)
-	  
+
 
 ;; (apply 'max (mapcar 'cadr '((1 2) (5 4))))
 
@@ -932,4 +937,3 @@ Exemple:
 ;; 		      )
 ;; 		     )
 ;; 		    )
-
