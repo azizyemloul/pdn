@@ -26,10 +26,10 @@
 ;(require 'sunrise-commander)
 (require 'outlined-zall-mode)
 
-(add-to-list 'load-path "~/.emacs.d/addons/git-modes")
-(add-to-list 'load-path "~/.emacs.d/addons/magit")
-(require 'magit)
-(setq magit-last-seen-setup-instructions "1.4.0")
+;; (add-to-list 'load-path "~/.emacs.d/addons/git-modes")
+;; (add-to-list 'load-path "~/.emacs.d/addons/magit")
+;; (require 'magit)
+;; (setq magit-last-seen-setup-instructions "1.4.0")
 
 ;(add-to-list 'load-path "~/.emacs.d/mode-line/")
 ;(require 'mode-line-stats)
@@ -1161,11 +1161,11 @@ FLYSPELL-BUFFER."
 
 
 ;(require 'viewer)
-(define-key view-mode-map	"j"		'next-line)
-(define-key view-mode-map	"k"		'previous-line)
-(define-key view-mode-map	"l"		'right-char)
-(define-key view-mode-map	"h"		'left-char)
-(define-key view-mode-map	"e"		'View-exit-and-edit)
+;; (define-key view-mode-map	"j"		'next-line)
+;; (define-key view-mode-map	"k"		'previous-line)
+;; (define-key view-mode-map	"l"		'right-char)
+;; (define-key view-mode-map	"h"		'left-char)
+;; (define-key view-mode-map	"e"		'View-exit-and-edit)
 
 (define-key help-mode-map	"j"		'next-line)
 (define-key help-mode-map	"k"		'previous-line)
