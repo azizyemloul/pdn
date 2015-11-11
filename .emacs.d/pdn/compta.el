@@ -125,6 +125,8 @@
 
 ;; ** infos diary
   (org-entry-put nil "Facture" (concat "[[file://" xfdfdoc "][" xfdflink "]]"))
+  (org-entry-put nil "ATTACH_DIR" destination)
+  (org-entry-put nil "Attachments" pdf)
 ;; ** remplissage de la facture et affichage
   (call-process "pdftk" nil "*scratch*" nil (expand-file-name "~/RMS/facture_fin.pdf") "fill_form" xfdfdoc "output" pdf "flatten")
   (start-process "my-process2" "*scratch*"  "evince" pdf)
