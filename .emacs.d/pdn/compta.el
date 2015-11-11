@@ -1,10 +1,6 @@
 ;; * Facturation à vide
-
-;; * Facturation
-(defun fac()
-  "Remplir le formulaire PDF de la facture à partir des informations sur la mission"
+(defun facv()
   (interactive)
-;; ** cacluls
   (setq
    client		(if (looking-at org-complex-heading-regexp) (setq leff (substring (substring-no-properties (match-string 5)) 1 -1)))
    facture_n		(org-entry-get nil "facture_n")
@@ -46,6 +42,16 @@
    frais_ttc		""
    montant_total	total_ttc
    )
+  (org-entry-put nil "HT" montant_ht)
+  (org-entry-put nil "TVA" tva)
+  (org-entry-put nil "TotalTTC" total_ttc)
+  )
+;; * Facturation
+(defun fac()
+  "Remplir le formulaire PDF de la facture à partir des informations sur la mission"
+  (interactive)
+;; ** cacluls
+  (facv)
 ;; ** client
   (progn
     (find-file "~/org/clients.org")
@@ -118,9 +124,6 @@
     )
 
 ;; ** infos diary
-  (org-entry-put nil "HT" montant_ht)
-  (org-entry-put nil "TVA" tva)
-  (org-entry-put nil "TotalTTC" total_ttc)
   (org-entry-put nil "Facture" (concat "[[file://" xfdfdoc "][" xfdflink "]]"))
 ;; ** remplissage de la facture et affichage
   (call-process "pdftk" nil "*scratch*" nil (expand-file-name "~/RMS/facture_fin.pdf") "fill_form" xfdfdoc "output" pdf "flatten")
