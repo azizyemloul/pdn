@@ -44,8 +44,8 @@
 	    '(
 	      ("^- \\([0-9:]*\\) :: \\(.*\\)$"	"@@html:<span style=\"font-size:9px\" class=\"btn btn-primary btn-xs\">@@- \\1 ::@@html:</span>@@ *\\2*") ;; questions
 	      ("^\\([^:\n ]*\\) : \\(.*\\)$"		"*\\1 :* \\2") ;; reponses identifiées
-	      ("^\\([0-9]\\)"				"  \\1") ;; chiffres orphelins en début de lignes (org-mode a tendance à les considérer comme une liste numérotée) 
-	      ("\\([0-9]\\)e\\>"			"\\1^{e}") ;; 1^{e} en exposant pr l'export html 
+	      ("^\\([0-9]\\)"				"  \\1") ;; chiffres orphelins en début de lignes (org-mode a tendance à les considérer comme une liste numérotée)
+	      ("\\([0-9]\\)e\\>"			"\\1^{e}") ;; 1^{e} en exposant pr l'export html
 	      )
 	    )
     (org-mode)
@@ -619,8 +619,8 @@
 	      ("^- \\([0-9:]*\\) :: dd \\(.*\\)$"	"@@html:<span style=\"font-size:10px;background:#000099;color:white;\">@@- \\1 ::@@html:</span>@@ *\\2*") ;; client
 	      ("^- \\([0-9:]*\\) :: pp \\(.*\\)$"	"@@html:<span style=\"font-size:10px;background:#D80000;color:white;\">@@- \\1 ::@@html:</span>@@ *\\2*") ;; opé
 	      ("^\\([^:\n ]*\\) : \\(.*\\)$"		"*\\1 :* \\2") ;; reponses identifiées
-	      ("^\\([0-9]\\)"				"  \\1") ;; chiffres orphelins en début de lignes (org-mode a tendance à les considérer comme une liste numérotée) 
-	      ("\\([0-9]\\)e\\>"			"\\1^{e}") ;; 1^{e} en exposant pr l'export html 
+	      ("^\\([0-9]\\)"				"  \\1") ;; chiffres orphelins en début de lignes (org-mode a tendance à les considérer comme une liste numérotée)
+	      ("\\([0-9]\\)e\\>"			"\\1^{e}") ;; 1^{e} en exposant pr l'export html
 	      )
 	    )
     (capitales)
@@ -643,7 +643,7 @@
      (start-process "mise-en-forme" "*test*"  "lowriter" "--nologo"  (concat titre-du-document ".html")))
   ;; (start-process "mise-en-forme" "*test*"  "lowriter" "--nologo"  (concat "~/Bureau/" titre-du-document ".html"))
   ;; (start-process "mise-en-forme" "*scratch*"  "lowriter" (concat "\"~/Bureau/" titre-du-document ".html\""))
-  
+
   )
 
 ;; * veoliacor
@@ -651,7 +651,7 @@
   "Replace “<” to “&lt;” and some other chars in HTML.
 This works on the current region."
   (interactive)
-  (condition-case nil (backup-this-file) (error nil))  
+  (condition-case nil (backup-this-file) (error nil))
   (dd)
 					; les questions
   (save-excursion
@@ -688,7 +688,7 @@ This works on the current region."
 	    ("^[\t ]*" "") ;; extraspaces
 	    ("  *" " ")
 	    (" *," ",")
-	    (" *\\." ".") 
+	    (" *\\." ".")
 	    ("^\\([^*+].*\\)\\([^?\n]\\)$" "\\1\\2.") ;;lineendpoint
 	    ("^\\([0-9A-Z]\\)$" "\\1.") ;; orphelines pointe
 	    (",,,*" "...")
@@ -712,7 +712,7 @@ This works on the current region."
   ;; (save-excursion (replace-regexp "+ \\(.*\\)" "\n- \\1 ?"))
   ;;(save-excursion (replace-regexp "+ \\(.*[^?]\\)" "\n- \\1."))
   (save-buffer)
- 
+
   (visual-line-mode)
   (flyspell-mode)
   (flyspell-buffer)
@@ -730,8 +730,8 @@ This works on the current region."
 	    '(
 	      ("^- \\([0-9:]*\\) :: \\(.*\\)$"	"@@html:<span style=\"font-size:9px\" class=\"btn btn-primary btn-xs\">@@- \\1 ::@@html:</span>@@ *\\2*") ;; questions
 	      ("^\\([^:\n ]*\\) : \\(.*\\)$"		"*\\1 :* \\2") ;; reponses identifiées
-	      ("^\\([0-9]\\)"				"  \\1") ;; chiffres orphelins en début de lignes (org-mode a tendance à les considérer comme une liste numérotée) 
-	      ("\\([0-9]\\)e\\>"			"\\1^{e}") ;; 1^{e} en exposant pr l'export html 
+	      ("^\\([0-9]\\)"				"  \\1") ;; chiffres orphelins en début de lignes (org-mode a tendance à les considérer comme une liste numérotée)
+	      ("\\([0-9]\\)e\\>"			"\\1^{e}") ;; 1^{e} en exposant pr l'export html
 	      )
 	    )
     (goto-char (point-min))
@@ -741,9 +741,3 @@ This works on the current region."
     (insert (concat "#+TITLE:     " titre-du-document "\n"))
     (insert-file-contents "~/org/forhtml.org")
 )
-
-;; * ferdhtmldoc
-(defun ferdhtml()
-(interactive)
-(ferd)
-(ehtmldoc))

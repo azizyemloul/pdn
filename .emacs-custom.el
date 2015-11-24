@@ -369,6 +369,7 @@ The document was typeset with
  '(history-length t)
  '(ido-enable-flex-matching t)
  '(ido-ignore-buffers (quote ("\\` " "\\*helm")))
+ '(ido-show-dot-for-dired t)
  '(inferior-lisp-program "clisp" t)
  '(inhibit-default-init t)
  '(inhibit-startup-screen t)

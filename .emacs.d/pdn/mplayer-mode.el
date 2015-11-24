@@ -49,18 +49,19 @@
 ;; - Proper org-mode integration would probably be nice (eg, a link to the file)
 ;; - Error handling and clean-up
 
-;;; Code:
+;; * Code:
 
-(defvar mplayer-executable "mplayer"
+(defvar mplayer-executable "mplayer2"
   "Name or path to the mplayer executable")
 
 (defvar mplayer-mode-map nil
   "Local keymap for mplayer-mode")
 
-;;; This prefix is chosen for ergonomic accessibility; it does ignore
-;;; the recomendations about C-x being for global combinations, etc,
-;;; so change if it's inconvenient.
-;;(defvar mplayer-prefix-command (kbd "C-x SPC")
+ ;;; This prefix is chosen for ergonomic accessibility; it does ignore
+ ;;; the recomendations about C-x being for global combinations, etc,
+ ;;; so change if it's inconvenient.
+ ;;(defvar mplayer-prefix-command (kbd "C-x SPC")
+
 (defvar mplayer-prefix-command (kbd "C-c")
   "The prefix for all mplayer minor-mode commands")
 
@@ -76,7 +77,7 @@
 (defvar mplayer-default-speed-step 10
   "The increase/decrease of playback speed that the faster/slower commands will use (percent of standard playback speed).")
 
-;;; Utilities:
+;; * Utilities:
 
 (defun mplayer--send (cmd)
   (process-send-string mplayer-process (concat cmd "\n")))
@@ -105,10 +106,10 @@ can be an integer or a string."
   (message "time to format: %s" time)
   (format-time-string mplayer-timestamp-format `(0 ,time 0) t))
 
-;;; Interactive Commands:
+;; * Interactive Commands:
 
 ;;***********************************************;;
-;;;            personnal                        ;;;
+;; **            personnal                        ;;;
 ;;***********************************************;;
 
 (defun mplayer-find-file (filename)
@@ -127,7 +128,7 @@ documentation for `mplayer-mode' for available bindings."
 
 
 ;;***********************************************;;
-;;;            original                         ;;;
+;; **            original                         ;;;
 ;;***********************************************;;
 
 (defun mplayer-toggle-pause ()
@@ -239,7 +240,7 @@ into the buffer."
      (kill-buffer mplayer-process-buffer)))
   (mplayer-mode nil))
 
-;;;;;;; CUSTOM ;;;;;;;;;;;;;;;;
+;; * CUSTOM
 (defun mplayer-inteligent-seek-backward()
   (interactive)
   (if (eq (org-clocking-p) 'nil)
@@ -267,7 +268,7 @@ into the buffer."
 ;;(define-key mplayer-mode-map (kbd "\\") 'aziz-mplayer-seek-position-at-point)
 
 
-;;; Mode setup:
+;; * Mode setup:
 
 (unless mplayer-mode-map
   (setq mplayer-mode-map (make-sparse-keymap)))

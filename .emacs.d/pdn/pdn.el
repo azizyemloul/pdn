@@ -1,6 +1,6 @@
 ;; * init
 (add-to-list 'auto-mode-alist		'("\\.org$"	. org-mode))
-(setq 
+(setq
  org-agenda-include-diary		nil
  org-agenda-start-with-follow-mode	nil
  org-completion-use-iswitchb		t
@@ -41,11 +41,11 @@
   (interactive)
   (save-excursion
     (or (org-at-heading-p) (outline-previous-visible-heading 1))
-    (setq 
+    (setq
      tagg		(or (condition-case nil (upcase (substring (org-entry-get nil "TAGS") 1 -1)) (error nil)) "")
-     jour		(format-time-string 
-			 "%d-%m-%Y" (or 
-				     (condition-case nil (org-time-string-to-time (org-entry-get nil "TIMESTAMP"))  (error nil)) 
+     jour		(format-time-string
+			 "%d-%m-%Y" (or
+				     (condition-case nil (org-time-string-to-time (org-entry-get nil "TIMESTAMP"))  (error nil))
 				     (condition-case nil (org-time-string-to-time (org-entry-get nil "SCHEDULED"))  (error nil))
 				     nil))
      fauxjour		(format-time-string "%Y-%m")
@@ -76,6 +76,9 @@
     (switch-to-buffer nom_de_fichier)
     (goto-char 0)
     (insert (concat "* " entete "\n"))
+    (goto-char 0)
+    (flush-lines "\\(CLOSED:\\|:PROPERTIES:\\|:ORIGIN:\\|:CHEMIN:\\|:MEDIAS:\\|:Effort:\\|:END:\\|:LOGBOOK:\\|CLOCK:\\)")
+    (correction)
    )
   )
 ;; * insertTime
@@ -131,7 +134,7 @@ Retourne le nom du fichier si l'emplacement n'a pas de parent. "
 Retourne le contenu depuis début du fichier
 jusqu'au premier entête si le point est avant le premier entête du fichier "
   (interactive)
-  (setq complex-heading-regexp 
+  (setq complex-heading-regexp
 	"^\\(\\*+\\)\\(?: +\\(TODO\\|DONE\\)\\)?\\(?: +\\(\\[#.\\]\\)\\)?\\(?: +\\(.*?\\)\\)??\\(?:[ 	]+\\(:[[:alnum:]_@#%:]+:\\)\\)?[ 	]*$")
   (save-excursion
     (cond
@@ -155,8 +158,8 @@ jusqu'au premier entête si le point est avant le premier entête du fichier "
 ;; * replaceRegexpNlist
 (defun replace-regexp-nlist(list)
   (interactive)
-  (mapcar 
-   (lambda(x) 
+  (mapcar
+   (lambda(x)
      (dd)
      (replace-regexp (nth 0 x) (nth 1 x))
      (while (search-forward "@" nil t) (replace-match "~" nil t))
@@ -174,7 +177,7 @@ jusqu'au premier entête si le point est avant le premier entête du fichier "
               (goto-char start)
               (re-search-forward "^\\(.*\\)\n\\(\\(.*\n\\)*\\)\\1\n" end t))
           (replace-match "\\1\n\\2")))))
-  
+
   (defun uniquify-all-lines-buffer ()
     "Delete duplicate lines in buffer and keep first occurrence."
     (interactive "*")
@@ -185,4 +188,3 @@ jusqu'au premier entête si le point est avant le premier entête du fichier "
 White space here is any of: space, tab, emacs newline (line feed, ASCII 10)."
 (replace-regexp-in-string "\\`[ \t\n]*" "" (replace-regexp-in-string "[ \t\n]*\\'" "" string))
 )
-

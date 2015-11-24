@@ -16,60 +16,60 @@
 ;(require 'multi-term)
 ;(require 'auto-package-update)
 
-(add-to-list 'load-path "/home/aziz/Documents/release_8.2.10/contrib/lisp/")
-(require 'org-mime)
+;; (add-to-list 'load-path "/home/aziz/Documents/release_8.2.10/contrib/lisp/")
+;; (require 'org-mime)
 
 
-(add-to-list 'load-path "~/.emacs.d/uniq/")
-(require 'mplayer-mode)
-;(require 'edit-server)
-;(require 'sunrise-commander)
-(require 'outlined-zall-mode)
+;; (add-to-list 'load-path "~/.emacs.d/uniq/")
+;; (require 'mplayer-mode)
+;; ;(require 'edit-server)
+;; ;(require 'sunrise-commander)
+;; (require 'outlined-zall-mode)
 
-;; (add-to-list 'load-path "~/.emacs.d/addons/git-modes")
-;; (add-to-list 'load-path "~/.emacs.d/addons/magit")
-;; (require 'magit)
-;; (setq magit-last-seen-setup-instructions "1.4.0")
+;; ;; (add-to-list 'load-path "~/.emacs.d/addons/git-modes")
+;; ;; (add-to-list 'load-path "~/.emacs.d/addons/magit")
+;; ;; (require 'magit)
+;; ;; (setq magit-last-seen-setup-instructions "1.4.0")
 
-;(add-to-list 'load-path "~/.emacs.d/mode-line/")
-;(require 'mode-line-stats)
-;(mode-line-stats-mode)
-;(global-set-key "\C-ß" 'mls-mode-line-toggle)
-;(setq mls-modules '(cpu memory disk battery))
-;; (setq mls-position :right)
+;; ;(add-to-list 'load-path "~/.emacs.d/mode-line/")
+;; ;(require 'mode-line-stats)
+;; ;(mode-line-stats-mode)
+;; ;(global-set-key "\C-ß" 'mls-mode-line-toggle)
+;; ;(setq mls-modules '(cpu memory disk battery))
+;; ;; (setq mls-position :right)
 
 ;; * elpa packages begins here
 (package-initialize)
 ;; ** emacs as X window manager conf is here
-(require 'exwm)
-(require 'exwm-config)
-(exwm-config-default)
-;; *** Application launcher
-;; (exwm-input-set-key (kbd "s-&")
-;;                     (lambda (command)
-;;                       (interactive (list (read-shell-command "$ ")))
-;;                       (start-process-shell-command command nil command)))
+;; (require 'exwm)
+;; (require 'exwm-config)
+;; (exwm-config-default)
+;; ;; *** Application launcher
+;; ;; (exwm-input-set-key (kbd "s-&")
+;; ;;                     (lambda (command)
+;; ;;                       (interactive (list (read-shell-command "$ ")))
+;; ;;                       (start-process-shell-command command nil command)))
 
 
-;; ** the rest of elpa packages stuff
-(require 'thingatpt)
-(require 'outlined-elisp-mode)
+;; ;; ** the rest of elpa packages stuff
+;; (require 'thingatpt)
+;; (require 'outlined-elisp-mode)
 ;(require 'langtool)
-(require 'w3m)
+;(require 'w3m)
 ;(require 'w3m-session)
 ;(require 'sr-speedbar)
-(require 'dired-details+)
-(require 'dired+)
-;(require 'calfw-gcal)
-;(require 'calfw)
-(require 'fold-this)
-(require 'hide-lines)
-(require 'file-props)
-(require 'helm-config)
-(require 'emamux)
-(file-props-dired-activate-display)
-(file-props-dired-setup-keybindings)
-
+;; (require 'dired-details+)
+;; (require 'dired+)
+;; ;(require 'calfw-gcal)
+;; ;(require 'calfw)
+;; (require 'fold-this)
+;; (require 'hide-lines)
+;; (require 'file-props)
+;; (require 'helm-config)
+;; (require 'emamux)
+;; (file-props-dired-activate-display)
+;; (file-props-dired-setup-keybindings)
+(require 'dired-x)
 (load-library	"server")
 (load-library	"savehist")
 (load-library	"iso-transl")
@@ -82,7 +82,7 @@
 ;(edit-server-start)
 
 
-(helm-mode		1)
+;(helm-mode		1)
 (recentf-mode		1)
 (delete-selection-mode	1)
 (tool-bar-mode		0)
@@ -95,7 +95,7 @@
 
 ;; * VARIABLES
 
-(add-to-list 'auto-mode-alist		'("\\.docx$"	. docx2txt))
+;(add-to-list 'auto-mode-alist		'("\\.docx$"	. docx2txt))
 
 (setq
  blink-cursor-mode			t
@@ -148,9 +148,10 @@
 ;(add-to-list 'load-path "~/.emacs.d/pdn/")
 ;(require 'load-directory)
 (load custom-file)
-(load gmail-credential-file)
+;(load gmail-credential-file)
 ;(load "~/.gnus.el")
-(load "~/.emacs.d/bbdb.el")
+					;(load "~/.emacs.d/bbdb.el")
+(load "~/.emacs.d/pdn/mplayer-mode.el")
 (load "~/.emacs.d/pdn/pdn.el")
 (load "~/.emacs.d/pdn/retrans.el")
 (load "~/.emacs.d/pdn/correction.el")
@@ -190,16 +191,16 @@
 
 (add-hook 'before-save-hook			'delete-trailing-whitespace)
 (add-hook 'diary-display-hook			'fancy-diary-display)
-(add-hook 'emacs-lisp-mode-hook			'outlined-elisp-find-file-hook)
-(add-hook 'awk-mode-hook			'outlined-zall-find-file-hook)
-(add-hook 'outlined-elisp-find-file-hook	'outline-mode-map)
+;(add-hook 'emacs-lisp-mode-hook			'outlined-elisp-find-file-hook)
+;;(add-hook 'awk-mode-hook			'outlined-zall-find-file-hook)
+;(add-hook 'outlined-elisp-find-file-hook	'outline-mode-map)
 
 ;(add-hook 'message-mode-hook			'bbdb-define-all-aliases 'append)
 
-(add-hook 'message-mode-hook			'orgstruct++-mode 'append)
-(add-hook 'message-mode-hook			'orgtbl-mode 'append)
-(add-hook 'message-mode-hook			'turn-on-flyspell 'append)
-(add-hook 'message-mode-hook			'(lambda () (local-set-key (kbd "C-c M-o") 'org-mime-htmlize)) 'append)
+;; (add-hook 'message-mode-hook			'orgstruct++-mode 'append)
+;; (add-hook 'message-mode-hook			'orgtbl-mode 'append)
+;; (add-hook 'message-mode-hook			'turn-on-flyspell 'append)
+;; (add-hook 'message-mode-hook			'(lambda () (local-set-key (kbd "C-c M-o") 'org-mime-htmlize)) 'append)
 
 (add-hook 'today-visible-calendar-hook		'calendar-mark-today)
 ;;(add-hook 'w3m-mode-hook			'w3m-add-keys)
@@ -400,133 +401,133 @@
 ;;   )
 
 ;; *** todoc
-(defun todoc()
-  (interactive)
-  (setq
-   todoc-script "~/bin/todoc"
-   this-buffer (buffer-name)
-   this-file (buffer-file-name)
-   doc-file (concat (file-name-sans-extension this-file) ".doc")
-   destination (concat "~/org/livraison/" (format-time-string "%m-%Y"))
-   )
-  ;; (set-process-filter (get-process "todoc") (lambda (process output)
-  ;; 						(string-match "Process todoc finished" output)))
-  (progn
-    (switch-to-buffer-other-window "*todoc*")
-    (goto-char (point-max))
-    (switch-to-buffer-other-window this-buffer))
-  (start-process "todoc" "*todoc*" todoc-script this-file)
-  (sleep-for 2)
-  (if (file-exists-p destination)
-      (rename-file doc-file destination 1)
-    (progn
-      (make-directory destination)
-      (rename-file doc-file destination 1)))
-  )
-;; *** mafia
-(defun mafia()
-  (interactive)
-  (setq
-   mafia-script "~/bin/mafia"
-   this-file (buffer-file-name)
-   this-buffer (buffer-name)
-   )
-  (progn
-    (switch-to-buffer-other-window "*mafia*")
-    (goto-char (point-max))
-    (switch-to-buffer-other-window this-buffer))
-  (start-process "mafia" "*mafia*" mafia-script this-file)
-  )
-;; ** FACTURATION
-;; *** org-time-string-to-seconds
-(defmacro with-time (time-output-p &rest exprs)
-  "Evaluate an org-table formula, converting all fields that look
-like time data to integer seconds.  If TIME-OUTPUT-P then return
-the result as a time value."
-  (list
-   (if time-output-p 'org-time-seconds-to-string 'identity)
-   (cons 'progn
-	 (mapcar
-	  (lambda (expr)
-	    `,(cons (car expr)
-		    (mapcar
-		     (lambda (el)
-		       (if (listp el)
-			   (list 'with-time nil el)
-			 (org-time-string-to-seconds el)))
-		     (cdr expr))))
-	  `,@exprs))))
+;; (defun todoc()
+;;   (interactive)
+;;   (setq
+;;    todoc-script "~/bin/todoc"
+;;    this-buffer (buffer-name)
+;;    this-file (buffer-file-name)
+;;    doc-file (concat (file-name-sans-extension this-file) ".doc")
+;;    destination (concat "~/org/livraison/" (format-time-string "%m-%Y"))
+;;    )
+;;   ;; (set-process-filter (get-process "todoc") (lambda (process output)
+;;   ;; 						(string-match "Process todoc finished" output)))
+;;   (progn
+;;     (switch-to-buffer-other-window "*todoc*")
+;;     (goto-char (point-max))
+;;     (switch-to-buffer-other-window this-buffer))
+;;   (start-process "todoc" "*todoc*" todoc-script this-file)
+;;   (sleep-for 2)
+;;   (if (file-exists-p destination)
+;;       (rename-file doc-file destination 1)
+;;     (progn
+;;       (make-directory destination)
+;;       (rename-file doc-file destination 1)))
+;;   )
+;; ;; *** mafia
+;; (defun mafia()
+;;   (interactive)
+;;   (setq
+;;    mafia-script "~/bin/mafia"
+;;    this-file (buffer-file-name)
+;;    this-buffer (buffer-name)
+;;    )
+;;   (progn
+;;     (switch-to-buffer-other-window "*mafia*")
+;;     (goto-char (point-max))
+;;     (switch-to-buffer-other-window this-buffer))
+;;   (start-process "mafia" "*mafia*" mafia-script this-file)
+;;   )
+;; ;; ** FACTURATION
+;; ;; *** org-time-string-to-seconds
+;; (defmacro with-time (time-output-p &rest exprs)
+;;   "Evaluate an org-table formula, converting all fields that look
+;; like time data to integer seconds.  If TIME-OUTPUT-P then return
+;; the result as a time value."
+;;   (list
+;;    (if time-output-p 'org-time-seconds-to-string 'identity)
+;;    (cons 'progn
+;; 	 (mapcar
+;; 	  (lambda (expr)
+;; 	    `,(cons (car expr)
+;; 		    (mapcar
+;; 		     (lambda (el)
+;; 		       (if (listp el)
+;; 			   (list 'with-time nil el)
+;; 			 (org-time-string-to-seconds el)))
+;; 		     (cdr expr))))
+;; 	  `,@exprs))))
 
 
-;; ** STENO
-;; *** translate
-(defun translate()
-  (interactive)
-  (downcase-region (point-min) (point-max))
-  (goto-char (point-min))
-  (setq moreline t)
-  (setq nline 0)
-  (while moreline								;; pour chaque ligne
-    (setq p1 (line-beginning-position))
-    (setq p2 (line-end-position))
-    (setq maliste (split-string (buffer-substring-no-properties p1 p2)))
-    (setq nline (+ 1 nline))
-    (message (concat "line n°: "  (number-to-string nline)))
-    (setq moreline (= 0 (forward-line 1)))
-    (with-temp-buffer								;; pour chaque mot
-      (setq compteur 1
-	    orth ""
-	    steno "")
-      (while maliste
-	(setq mot (pop maliste))
+;; ;; ** STENO
+;; ;; *** translate
+;; (defun translate()
+;;   (interactive)
+;;   (downcase-region (point-min) (point-max))
+;;   (goto-char (point-min))
+;;   (setq moreline t)
+;;   (setq nline 0)
+;;   (while moreline								;; pour chaque ligne
+;;     (setq p1 (line-beginning-position))
+;;     (setq p2 (line-end-position))
+;;     (setq maliste (split-string (buffer-substring-no-properties p1 p2)))
+;;     (setq nline (+ 1 nline))
+;;     (message (concat "line n°: "  (number-to-string nline)))
+;;     (setq moreline (= 0 (forward-line 1)))
+;;     (with-temp-buffer								;; pour chaque mot
+;;       (setq compteur 1
+;; 	    orth ""
+;; 	    steno "")
+;;       (while maliste
+;; 	(setq mot (pop maliste))
 
-	(if (numberp (string-match "'" mot))
-	    (progn
-	      (setq avantapos (substring mot 0 (string-match "'" mot))
-		    mot (substring mot (+ 1 (string-match "'" mot)))
-		    apos "'")
-	      (if (string= "l" avantapos) (setq stelision "L"))
-	      (if (string= "t" avantapos) (setq stelision "T"))
-	      (if (string= "j" avantapos) (setq stelision "Y"))
-	      (if (string= "m" avantapos) (setq stelision "M"))
-	      (if (string= "s" avantapos) (setq stelision "S"))
-	      (if (string= "c" avantapos) (setq stelision "S"))
-	      (if (string= "n" avantapos) (setq stelision "N"))
-	      (if (string= "d" avantapos) (setq stelision "T*"))
-	      (if (string= "qu" avantapos) (setq stelision "K")))
-	  (progn
-	    (setq  apos ""
-		   avantapos ""
-		   stelision "")))
+;; 	(if (numberp (string-match "'" mot))
+;; 	    (progn
+;; 	      (setq avantapos (substring mot 0 (string-match "'" mot))
+;; 		    mot (substring mot (+ 1 (string-match "'" mot)))
+;; 		    apos "'")
+;; 	      (if (string= "l" avantapos) (setq stelision "L"))
+;; 	      (if (string= "t" avantapos) (setq stelision "T"))
+;; 	      (if (string= "j" avantapos) (setq stelision "Y"))
+;; 	      (if (string= "m" avantapos) (setq stelision "M"))
+;; 	      (if (string= "s" avantapos) (setq stelision "S"))
+;; 	      (if (string= "c" avantapos) (setq stelision "S"))
+;; 	      (if (string= "n" avantapos) (setq stelision "N"))
+;; 	      (if (string= "d" avantapos) (setq stelision "T*"))
+;; 	      (if (string= "qu" avantapos) (setq stelision "K")))
+;; 	  (progn
+;; 	    (setq  apos ""
+;; 		   avantapos ""
+;; 		   stelision "")))
 
-	  (with-temp-buffer
-	    (find-file "/home/azyvers/dict-france/Atelier/nude.txt")
-	    (goto-char (point-min))
-	    (if (numberp (re-search-forward (concat "^" mot "|") nil t))
-	      (progn
-		(goto-char (point-min))
-		(goto-char (re-search-forward (concat "^" mot "|") nil t))
-		(setq begin (point))
-		(setq end (line-end-position))
-		(setq trad (buffer-substring-no-properties begin end)))
-	      (setq trad "---")))
-	  (setq
-	   orth (concat orth " " avantapos apos mot)
-	   steno (concat steno "/" stelision trad)
-	   compteur (+ 1 compteur))
-	  )
-	)
+;; 	  (with-temp-buffer
+;; 	    (find-file "/home/azyvers/dict-france/Atelier/nude.txt")
+;; 	    (goto-char (point-min))
+;; 	    (if (numberp (re-search-forward (concat "^" mot "|") nil t))
+;; 	      (progn
+;; 		(goto-char (point-min))
+;; 		(goto-char (re-search-forward (concat "^" mot "|") nil t))
+;; 		(setq begin (point))
+;; 		(setq end (line-end-position))
+;; 		(setq trad (buffer-substring-no-properties begin end)))
+;; 	      (setq trad "---")))
+;; 	  (setq
+;; 	   orth (concat orth " " avantapos apos mot)
+;; 	   steno (concat steno "/" stelision trad)
+;; 	   compteur (+ 1 compteur))
+;; 	  )
+;; 	)
 
-    (with-current-buffer "*scratch*"
-      (insert  (concat "\"" steno "\": \"" orth "\",\n"))
-      )
-    )
-    (with-current-buffer "*scratch*"
-      (goto-char (point-min))
-      (replace-string "\"/" "\"")
-      (goto-char (point-min))
-      (replace-string "\" " "\""))
-  )
+;;     (with-current-buffer "*scratch*"
+;;       (insert  (concat "\"" steno "\": \"" orth "\",\n"))
+;;       )
+;;     )
+;;     (with-current-buffer "*scratch*"
+;;       (goto-char (point-min))
+;;       (replace-string "\"/" "\"")
+;;       (goto-char (point-min))
+;;       (replace-string "\" " "\""))
+;;   )
 
 
 
@@ -622,25 +623,25 @@ the result as a time value."
 
 
 ;; ** CHECK-JSON
-(defun find-broken-json ()
-  "Rudimentary function to check Plover dictionary entries for ones that are malformed. Move point to the beginning of the line of the first entry, then do M-x find-broken-json <RET>. It will (hopefully) fail if it hits a line that contains an invalid entry (though point may be on the following line depending on what is wrong with the entry, so you should check both the current and previous lines when it stops. Once you've fixed an error you can either move point to the beginning of the formerly-broken entry and re-run from there, or just start over at the beginning, but I recommend at least moving back to before the hopefully-fixed-entry in the file to double-check that it is now fixed. At most there needs to be only whitespace between point and the opening quotation mark for the stenographic stroke of an entry when you invoke find-broken-json for find-broken-json to work properly. It assumes that both the steno stroke and the replacement text are in quotation marks and should fail if they are not. The Plover dictionary can be quite large; do not be surprised if this function takes a few minutes to complete checking the entire thing. It should fail on the last entry because that entry does not have a comma after it; users are strongly encouraged to check the final entry by visual inspection and to make sure that there is a closing brace after it. Be advised that, given its rudimentary nature, it may stop on valid entries and it may miss invalid entries; no warranties are provided, and I make no guarantees about the fitness of this function for use on any computer. Do not taunt find-broken-json. Best of luck! ^_^"
-  (interactive)
-  (while (and (not (eq (point) (point-max))))
-    (let* ((beginning (point))
-	   (end (search-forward-regexp "\"\\s *," nil t))
-	   (dict-entry (if end (buffer-substring beginning end) nil)))
-      (with-temp-buffer
-	(insert dict-entry)
-	(goto-char (point-min))
-	(search-forward-regexp "\\`\\s *\"[^\"]*\"\\s *:\\s *\"[^\"]*\\(\\\\\"\\)?[^\"]*\"\\s *,\\'")))))
-;; ** Blogger ~/.emacs.d/elpa/bpe-20131227.2120/bpe.el
-;(require 'bpe)
-(require 'htmlize nil 'noerror)
-(setq bpe:blog-name "Sténotypie Underground")
-;(define-key org-mode-map (kbd "C-c C-p") 'bpe:post-article)
-;(define-key org-mode-map (kbd "C-c C-i") 'bpe:insert-template)
+;; (defun find-broken-json ()
+;;   "Rudimentary function to check Plover dictionary entries for ones that are malformed. Move point to the beginning of the line of the first entry, then do M-x find-broken-json <RET>. It will (hopefully) fail if it hits a line that contains an invalid entry (though point may be on the following line depending on what is wrong with the entry, so you should check both the current and previous lines when it stops. Once you've fixed an error you can either move point to the beginning of the formerly-broken entry and re-run from there, or just start over at the beginning, but I recommend at least moving back to before the hopefully-fixed-entry in the file to double-check that it is now fixed. At most there needs to be only whitespace between point and the opening quotation mark for the stenographic stroke of an entry when you invoke find-broken-json for find-broken-json to work properly. It assumes that both the steno stroke and the replacement text are in quotation marks and should fail if they are not. The Plover dictionary can be quite large; do not be surprised if this function takes a few minutes to complete checking the entire thing. It should fail on the last entry because that entry does not have a comma after it; users are strongly encouraged to check the final entry by visual inspection and to make sure that there is a closing brace after it. Be advised that, given its rudimentary nature, it may stop on valid entries and it may miss invalid entries; no warranties are provided, and I make no guarantees about the fitness of this function for use on any computer. Do not taunt find-broken-json. Best of luck! ^_^"
+;;   (interactive)
+;;   (while (and (not (eq (point) (point-max))))
+;;     (let* ((beginning (point))
+;; 	   (end (search-forward-regexp "\"\\s *," nil t))
+;; 	   (dict-entry (if end (buffer-substring beginning end) nil)))
+;;       (with-temp-buffer
+;; 	(insert dict-entry)
+;; 	(goto-char (point-min))
+;; 	(search-forward-regexp "\\`\\s *\"[^\"]*\"\\s *:\\s *\"[^\"]*\\(\\\\\"\\)?[^\"]*\"\\s *,\\'")))))
+;; ;; ** Blogger ~/.emacs.d/elpa/bpe-20131227.2120/bpe.el
+;; ;(require 'bpe)
+;; (require 'htmlize nil 'noerror)
+;; (setq bpe:blog-name "Sténotypie Underground")
+;; ;(define-key org-mode-map (kbd "C-c C-p") 'bpe:post-article)
+;; ;(define-key org-mode-map (kbd "C-c C-i") 'bpe:insert-template)
 
-;; ** AUTRES
+;; ;; ** AUTRES
 ;; *** kill buffer and delete file
 (defun killanddelete()
   (interactive)
@@ -714,21 +715,21 @@ recursively processing #+INCLUDEs."
 
 
 ;; *** prepare-html
-(defun prepare-html ()
-  (interactive)
-  (time-guide)
-  (goto-char (point-max))
-  (insert "\n")
-  (insert-file-contents "~/.emacs.d/org-templates/jwplayer.template")
-  (goto-char (point-min))
-  (insert "#+SETUPFILE: ~/.emacs.d/org-templates/level-0.org\n")
-  (re-search-forward "\\* \\(.*\\)$" nil t)
-  (beginning-of-line)
-  (insert (concat "#+Title: " (match-string 1)))
-  (kill-line)
-  (goto-char (point-max))
-  (re-search-backward "æææ" nil t)
-  )
+;; (defun prepare-html ()
+;;   (interactive)
+;;   (time-guide)
+;;   (goto-char (point-max))
+;;   (insert "\n")
+;;   (insert-file-contents "~/.emacs.d/org-templates/jwplayer.template")
+;;   (goto-char (point-min))
+;;   (insert "#+SETUPFILE: ~/.emacs.d/org-templates/level-0.org\n")
+;;   (re-search-forward "\\* \\(.*\\)$" nil t)
+;;   (beginning-of-line)
+;;   (insert (concat "#+Title: " (match-string 1)))
+;;   (kill-line)
+;;   (goto-char (point-max))
+;;   (re-search-backward "æææ" nil t)
+;;   )
 
 (fset 'time-guide
       (lambda (&optional arg) "Keyboard macro." (interactive "p") (kmacro-exec-ring-item (quote ("xreplace-regexp^- \\([0-9]\\{0,2\\}:\\{0,1\\}[0-9]\\{0,2\\}:\\{0,1\\}[0-9]\\{1,2\\}\\) :: \\(.*\\)$*** \\2
@@ -811,100 +812,100 @@ recursively processing #+INCLUDEs."
     (xsteve-flip-windows)))
 
 ;; *** xsteve-flip-windows
-(defun xsteve-flip-windows ()
-  (interactive)
-  (let ((cur-buffer (current-buffer))
-	(top-buffer)
-	(bottom-buffer))
-    (pop-to-buffer (window-buffer (frame-first-window)))
-    (setq top-buffer (current-buffer))
-    (other-window 1)
-    (setq bottom-buffer (current-buffer))
-    (switch-to-buffer top-buffer)
-    (other-window -1)
-    (switch-to-buffer bottom-buffer)
-    (pop-to-buffer cur-buffer)))
+;; (defun xsteve-flip-windows ()
+;;   (interactive)
+;;   (let ((cur-buffer (current-buffer))
+;; 	(top-buffer)
+;; 	(bottom-buffer))
+;;     (pop-to-buffer (window-buffer (frame-first-window)))
+;;     (setq top-buffer (current-buffer))
+;;     (other-window 1)
+;;     (setq bottom-buffer (current-buffer))
+;;     (switch-to-buffer top-buffer)
+;;     (other-window -1)
+;;     (switch-to-buffer bottom-buffer)
+;;     (pop-to-buffer cur-buffer)))
 
-;; *** facture
-(defun facture()
-  (interactive)
-  (find-file "~/facturage/0_facture.org")
-  (goto-char (point-min))
-  (outline-next-visible-heading 1)
-  (org-narrow-to-subtree))
+;; ;; *** facture
+;; (defun facture()
+;;   (interactive)
+;;   (find-file "~/facturage/0_facture.org")
+;;   (goto-char (point-min))
+;;   (outline-next-visible-heading 1)
+;;   (org-narrow-to-subtree))
 
-;; *** facgen
-(defun facgen()
-  (interactive)
-  (org-table-iterate)
-  (goto-char (point-min))
-  (replace-regexp "\\<0\.00\\>" " ")
-  (org-cycle)
-  (save-buffer)
-  (widen)
-  (setq org-confirm-babel-evaluate nil)
-  (org-export-as-utf8)
-  (with-current-buffer "0_facture.txt"
-    (goto-char (point-min))
-    (search-forward "<" nil t)
-    (setq splitPos (1- (point)))
-    (kill-region (point-min) splitPos)
-    (replace-regexp "\\\"\\\[" "\"")
-    (replace-regexp "\\\]\\\"" "\"")
-    (flush-lines "\*" (point-min) (point-max))
-    (flush-lines "^$" (point-min) (point-max))
-    (save-buffer)
-    (call-process "pdftk" nil "*scratch*" nil
-		  "ABC Portage_Bon de commande_TYPE FR.pdf"
-		  "fill_form" "0_facture.txt" "output" "test.pdf")
-    (call-process "pdftk" nil "*scratch*" nil
-		  "test.pdf" "burst" "output" "page_%d.pdf")
-    (call-process "convert" nil "*scratch*" nil
-		  "-density" "100" "page_1.pdf" "page_1.png")
-    (call-process "convert" nil "*scratch*" nil
-		  "-density" "100" "page_2.pdf" "page_2.png")
-    (call-process "composite" nil "*scratch*" nil
-		  "-geometry"  "228x101+560+950" "signature.png"  "page_1.png"  "page_1b.png")
-    (call-process "composite" nil "*scratch*" nil
-		  "-geometry"  "228x101+560+920" "signature.png"  "page_2.png"  "page_2b.png")
-    (call-process "convert" nil "*scratch*" nil
-		  "-density" "100" "page_1b.png" "page_1.pdf")
-    (call-process "convert" nil "*scratch*" nil
-		  "-density" "100" "page_2b.png" "page_2.pdf")
-    (call-process "pdftk" nil "*scratch*" nil
-		  "page_1.pdf" "page_2.pdf" "cat" "output" "test_signed.pdf")
-    ;; (call-process "xpdf" nil "*scratch*" nil "test_signed.pdf")
-    ;; (start-process "my-process" "*scratch*"
-    ;;                "pdftk" "ABC Portage_Bon de commande_TYPE FR.pdf"
-    ;;                "fill_form" "facture.txt" "output" "test.pdf")
-    (start-process "my-process2" "*scratch*"
-		   "acroread" "test_signed.pdf")
-    (start-process "my-process3" "*scratch*"
-		   "rm"
-		   "doc_data.txt"
-		   "page_1b.png"
-		   "page_1.pdf"
-		   "page_1.png"
-		   "page_2b.png"
-		   "page_2.pdf"
-		   "page_2.png"
-		   )
+;; ;; *** facgen
+;; (defun facgen()
+;;   (interactive)
+;;   (org-table-iterate)
+;;   (goto-char (point-min))
+;;   (replace-regexp "\\<0\.00\\>" " ")
+;;   (org-cycle)
+;;   (save-buffer)
+;;   (widen)
+;;   (setq org-confirm-babel-evaluate nil)
+;;   (org-export-as-utf8)
+;;   (with-current-buffer "0_facture.txt"
+;;     (goto-char (point-min))
+;;     (search-forward "<" nil t)
+;;     (setq splitPos (1- (point)))
+;;     (kill-region (point-min) splitPos)
+;;     (replace-regexp "\\\"\\\[" "\"")
+;;     (replace-regexp "\\\]\\\"" "\"")
+;;     (flush-lines "\*" (point-min) (point-max))
+;;     (flush-lines "^$" (point-min) (point-max))
+;;     (save-buffer)
+;;     (call-process "pdftk" nil "*scratch*" nil
+;; 		  "ABC Portage_Bon de commande_TYPE FR.pdf"
+;; 		  "fill_form" "0_facture.txt" "output" "test.pdf")
+;;     (call-process "pdftk" nil "*scratch*" nil
+;; 		  "test.pdf" "burst" "output" "page_%d.pdf")
+;;     (call-process "convert" nil "*scratch*" nil
+;; 		  "-density" "100" "page_1.pdf" "page_1.png")
+;;     (call-process "convert" nil "*scratch*" nil
+;; 		  "-density" "100" "page_2.pdf" "page_2.png")
+;;     (call-process "composite" nil "*scratch*" nil
+;; 		  "-geometry"  "228x101+560+950" "signature.png"  "page_1.png"  "page_1b.png")
+;;     (call-process "composite" nil "*scratch*" nil
+;; 		  "-geometry"  "228x101+560+920" "signature.png"  "page_2.png"  "page_2b.png")
+;;     (call-process "convert" nil "*scratch*" nil
+;; 		  "-density" "100" "page_1b.png" "page_1.pdf")
+;;     (call-process "convert" nil "*scratch*" nil
+;; 		  "-density" "100" "page_2b.png" "page_2.pdf")
+;;     (call-process "pdftk" nil "*scratch*" nil
+;; 		  "page_1.pdf" "page_2.pdf" "cat" "output" "test_signed.pdf")
+;;     ;; (call-process "xpdf" nil "*scratch*" nil "test_signed.pdf")
+;;     ;; (start-process "my-process" "*scratch*"
+;;     ;;                "pdftk" "ABC Portage_Bon de commande_TYPE FR.pdf"
+;;     ;;                "fill_form" "facture.txt" "output" "test.pdf")
+;;     (start-process "my-process2" "*scratch*"
+;; 		   "acroread" "test_signed.pdf")
+;;     (start-process "my-process3" "*scratch*"
+;; 		   "rm"
+;; 		   "doc_data.txt"
+;; 		   "page_1b.png"
+;; 		   "page_1.pdf"
+;; 		   "page_1.png"
+;; 		   "page_2b.png"
+;; 		   "page_2.pdf"
+;; 		   "page_2.png"
+;; 		   )
 
-    ))
+;;     ))
 
-;; *** docx2txt
-(defun docx2txt ()
-  "Run docx2txt on the entire buffer."
-  (setq
-   a (buffer-name)
-   b (file-name-sans-extension a)
-   c (concat b ".org")
-   )
-  (shell-command-on-region (point-min) (point-max) "docx2txt" c)
-  (kill-buffer a)
-  (switch-to-buffer c)
-  )
-(put 'narrow-to-region 'disabled nil)
+;; ;; *** docx2txt
+;; (defun docx2txt ()
+;;   "Run docx2txt on the entire buffer."
+;;   (setq
+;;    a (buffer-name)
+;;    b (file-name-sans-extension a)
+;;    c (concat b ".org")
+;;    )
+;;   (shell-command-on-region (point-min) (point-max) "docx2txt" c)
+;;   (kill-buffer a)
+;;   (switch-to-buffer c)
+;;   )
+;; (put 'narrow-to-region 'disabled nil)
 
 
 ;; *** flyspell-goto-previous-error
@@ -1017,41 +1018,41 @@ FLYSPELL-BUFFER."
 
 
 ;; *** vlctv
-(defun vlctv(a)
-  (if (get-process "RADIO")
-      (progn (kill-process "RADIO")
-	     (sleep-for 2)
-	     (start-process  "RADIO" "*RADIO*" "vlc" a))
-    (start-process  "RADIO" "*RADIO*" "vlc"  a)))
+;; (defun vlctv(a)
+;;   (if (get-process "RADIO")
+;;       (progn (kill-process "RADIO")
+;; 	     (sleep-for 2)
+;; 	     (start-process  "RADIO" "*RADIO*" "vlc" a))
+;;     (start-process  "RADIO" "*RADIO*" "vlc"  a)))
 
-;; *** liretv
-(defun liretv(a)
-  (if (get-process "TV")
-      (progn (kill-process "TV")
-	     (sleep-for 2)
-	     (start-process  "TV" "*TV*" "mplayer" "-quiet" "-nocache" a))
-    (start-process  "TV" "*TV*" "mplayer" "-quiet" "-nocache" a)))
+;; ;; *** liretv
+;; (defun liretv(a)
+;;   (if (get-process "TV")
+;;       (progn (kill-process "TV")
+;; 	     (sleep-for 2)
+;; 	     (start-process  "TV" "*TV*" "mplayer" "-quiet" "-nocache" a))
+;;     (start-process  "TV" "*TV*" "mplayer" "-quiet" "-nocache" a)))
 
-;; *** lirelelien
-(defun lirelelien(a)
-  (if (get-process "RADIO")
-      (progn (kill-process "RADIO")
-	     (sleep-for 2)
-	     (start-process  "RADIO" "*RADIO*" "mplayer" "-quiet" a))
-    (start-process  "RADIO" "*RADIO*" "mplayer" "-quiet" a)))
+;; ;; *** lirelelien
+;; (defun lirelelien(a)
+;;   (if (get-process "RADIO")
+;;       (progn (kill-process "RADIO")
+;; 	     (sleep-for 2)
+;; 	     (start-process  "RADIO" "*RADIO*" "mplayer" "-quiet" a))
+;;     (start-process  "RADIO" "*RADIO*" "mplayer" "-quiet" a)))
 
-;; *** enrgislelien
-(defun enrgislelien(a)
-  (if (get-process "RADIO")
-      (progn (kill-process "RADIO")
-	     (sleep-for 2)
-	     (start-process  "RADIO" "*RADIO*" "mplayer" "-quiet" "-dumpstream" "-dumpfile"  "fichier.wmv" a))
-    (start-process  "RADIO" "*RADIO*" "mplayer" "-quiet" "-dumpstream" "-dumpfile" "fichier.wmv" a)))
+;; ;; *** enrgislelien
+;; (defun enrgislelien(a)
+;;   (if (get-process "RADIO")
+;;       (progn (kill-process "RADIO")
+;; 	     (sleep-for 2)
+;; 	     (start-process  "RADIO" "*RADIO*" "mplayer" "-quiet" "-dumpstream" "-dumpfile"  "fichier.wmv" a))
+;;     (start-process  "RADIO" "*RADIO*" "mplayer" "-quiet" "-dumpstream" "-dumpfile" "fichier.wmv" a)))
 
-;; *** radio
-(defun radio()
-  (interactive)
-  (find-file "~/org/radios.org"))
+;; ;; *** radio
+;; (defun radio()
+;;   (interactive)
+;;   (find-file "~/org/radios.org"))
 
 ;; * TABBAR
 (tabbar-mode)
@@ -1094,7 +1095,7 @@ FLYSPELL-BUFFER."
 (global-set-key (kbd "C-c <right>")	'tabbar-forward)
 (global-set-key	"\M-n"			'tabbar-forward)
 (global-set-key	"\M-p"			'tabbar-backward)
-(define-key dired-mode-map	(kbd "M-p")		'tabbar-backward)
+;;(define-key dired-mode-map	(kbd "M-p")		'tabbar-backward)
 
 (setq tabbar-buffer-groups-function
       (lambda ()
@@ -1154,10 +1155,10 @@ FLYSPELL-BUFFER."
 (define-key global-map		"\C-cb"			'display-buffer)
 (define-key global-map		"\C-cn"			'find-file-other-window)
 
-(define-key dired-mode-map	(kbd "C-p")		'dired-omit-mode)
-(define-key dired-mode-map	(kbd "C-o")		'other-window)
-(define-key dired-mode-map	(kbd "<return>")	'dired-find-alternate-file) ; was dired-advertised-find-file
-(define-key dired-mode-map	(kbd "^")		(lambda () (interactive) (find-alternate-file "..")))  ; was dired-up-directory
+;; (define-key dired-mode-map	(kbd "C-p")		'dired-omit-mode)
+;; (define-key dired-mode-map	(kbd "C-o")		'other-window)
+;; (define-key dired-mode-map	(kbd "<return>")	'dired-find-alternate-file) ; was dired-advertised-find-file
+;; (define-key dired-mode-map	(kbd "^")		(lambda () (interactive) (find-alternate-file "..")))  ; was dired-up-directory
 
 
 ;(require 'viewer)
@@ -1167,17 +1168,17 @@ FLYSPELL-BUFFER."
 ;; (define-key view-mode-map	"h"		'left-char)
 ;; (define-key view-mode-map	"e"		'View-exit-and-edit)
 
-(define-key help-mode-map	"j"		'next-line)
-(define-key help-mode-map	"k"		'previous-line)
-(define-key help-mode-map	"l"		'right-char)
-(define-key help-mode-map	"h"		'left-char)
+;; (define-key help-mode-map	"j"		'next-line)
+;; (define-key help-mode-map	"k"		'previous-line)
+;; (define-key help-mode-map	"l"		'right-char)
+;; (define-key help-mode-map	"h"		'left-char)
 
-(define-key w3m-mode-map	"\C-dt"		'google-translate-at-point)
-(define-key w3m-mode-map	"\C-ddt"	'google-translate-at-point-reverse)
-(define-key w3m-mode-map	"\M-p"		'w3m-previous-buffer)
-(define-key w3m-mode-map	"\M-n"		'w3m-next-buffer)
-(define-key w3m-mode-map	"k"		'previous-line)
-(define-key w3m-mode-map	"j"		'next-line)
+;; (define-key w3m-mode-map	"\C-dt"		'google-translate-at-point)
+;; (define-key w3m-mode-map	"\C-ddt"	'google-translate-at-point-reverse)
+;; (define-key w3m-mode-map	"\M-p"		'w3m-previous-buffer)
+;; (define-key w3m-mode-map	"\M-n"		'w3m-next-buffer)
+;; (define-key w3m-mode-map	"k"		'previous-line)
+;; (define-key w3m-mode-map	"j"		'next-line)
 
 (add-hook 'term-mode-hook
               '(lambda ()
@@ -1223,71 +1224,71 @@ FLYSPELL-BUFFER."
 ;;       bbdb-always-add-address			t
 ;;       )
 ;; * MAIL-REGION
-(defun mail-region (b e to subject)
-  "Send the current region in an email"
-  (interactive "r\nsRecipient: \nsSubject: ")
-  (let ((orig-buffer (current-buffer)))
-    (message-mail to subject)
-    (message-goto-body)
-    (insert (save-excursion (set-buffer orig-buffer)
-			    (buffer-substring-no-properties b e)))
-    (message-send-and-exit)))
+;; (defun mail-region (b e to subject)
+;;   "Send the current region in an email"
+;;   (interactive "r\nsRecipient: \nsSubject: ")
+;;   (let ((orig-buffer (current-buffer)))
+;;     (message-mail to subject)
+;;     (message-goto-body)
+;;     (insert (save-excursion (set-buffer orig-buffer)
+;; 			    (buffer-substring-no-properties b e)))
+;;     (message-send-and-exit)))
 
-;; * asciify
+;; ;; * asciify
 
-(defun asciify-text (ξstring &optional ξfrom ξto)
-"Change some Unicode characters into equivalent ASCII ones.
-For example, “passé” becomes “passe”.
+;; (defun asciify-text (ξstring &optional ξfrom ξto)
+;; "Change some Unicode characters into equivalent ASCII ones.
+;; For example, “passé” becomes “passe”.
 
-This function works on chars in European languages, and does not transcode arbitrary Unicode chars (such as Greek, math symbols).  Un-transformed unicode char remains in the string.
+;; This function works on chars in European languages, and does not transcode arbitrary Unicode chars (such as Greek, math symbols).  Un-transformed unicode char remains in the string.
 
-When called interactively, work on text selection or current block.
+;; When called interactively, work on text selection or current block.
 
-When called in lisp code, if ξfrom is nil, returns a changed string, else, change text in the region between positions ξfrom ξto."
-  (interactive
-   (if (use-region-p)
-       (list nil (region-beginning) (region-end))
-     (let ((bds (bounds-of-thing-at-point 'paragraph)) )
-       (list nil (car bds) (cdr bds)) ) ) )
+;; When called in lisp code, if ξfrom is nil, returns a changed string, else, change text in the region between positions ξfrom ξto."
+;;   (interactive
+;;    (if (use-region-p)
+;;        (list nil (region-beginning) (region-end))
+;;      (let ((bds (bounds-of-thing-at-point 'paragraph)) )
+;;        (list nil (car bds) (cdr bds)) ) ) )
 
-  (require 'xfrp_find_replace_pairs)
+;;   (require 'xfrp_find_replace_pairs)
 
-  (let (workOnStringP
-        inputStr
-        (charChangeMap [
-                        ["á\\|à\\|â\\|ä\\|ã\\|å" "a"]
-                        ["é\\|è\\|ê\\|ë" "e"]
-                        ["í\\|ì\\|î\\|ï" "i"]
-                        ["ó\\|ò\\|ô\\|ö\\|õ\\|ø" "o"]
-                        ["ú\\|ù\\|û\\|ü"     "u"]
-                        ["Ý\\|ý\\|ÿ"     "y"]
-                        ["ñ" "n"]
-                        ["ç" "c"]
-                        ["ð" "d"]
-                        ["þ" "th"]
-                        ["ß" "ss"]
-                        ["æ" "ae"]
-                        ])
-        )
-    (setq workOnStringP (if ξfrom nil t))
-    (setq inputStr (if workOnStringP ξstring (buffer-substring-no-properties ξfrom ξto)))
-    (if workOnStringP
-        (let ((case-fold-search t)) (replace-regexp-pairs-in-string inputStr charChangeMap) )
-      (let ((case-fold-search t)) (replace-regexp-pairs-region ξfrom ξto charChangeMap) )) ) )
-;; * org-protocol with conkeror
-;; ;; the 'w' corresponds with the 'w' used before as in:
-;;   emacsclient \"org-protocol:/capture:/w/  [...]
-(setq org-capture-templates
-      '(
-	("w" "" entry ;; 'w' for 'org-protocol'
-	 (file+headline "www.org" "Notes")
-	 "* %^{Title}\nSource: %u, %c\n%i")
-	("x" "" entry ;; 'w' for 'org-protocol'
-	 (file+headline "clisp.org" "Notes")
-	 "* %^{Title}\nSource: %u, %l\n%i")
-	;;       "* %c%?\nSource: %u, %l\n%i")
-	;; other templates
-	))
+;;   (let (workOnStringP
+;;         inputStr
+;;         (charChangeMap [
+;;                         ["á\\|à\\|â\\|ä\\|ã\\|å" "a"]
+;;                         ["é\\|è\\|ê\\|ë" "e"]
+;;                         ["í\\|ì\\|î\\|ï" "i"]
+;;                         ["ó\\|ò\\|ô\\|ö\\|õ\\|ø" "o"]
+;;                         ["ú\\|ù\\|û\\|ü"     "u"]
+;;                         ["Ý\\|ý\\|ÿ"     "y"]
+;;                         ["ñ" "n"]
+;;                         ["ç" "c"]
+;;                         ["ð" "d"]
+;;                         ["þ" "th"]
+;;                         ["ß" "ss"]
+;;                         ["æ" "ae"]
+;;                         ])
+;;         )
+;;     (setq workOnStringP (if ξfrom nil t))
+;;     (setq inputStr (if workOnStringP ξstring (buffer-substring-no-properties ξfrom ξto)))
+;;     (if workOnStringP
+;;         (let ((case-fold-search t)) (replace-regexp-pairs-in-string inputStr charChangeMap) )
+;;       (let ((case-fold-search t)) (replace-regexp-pairs-region ξfrom ξto charChangeMap) )) ) )
+;; ;; * org-protocol with conkeror
+;; ;; ;; the 'w' corresponds with the 'w' used before as in:
+;; ;;   emacsclient \"org-protocol:/capture:/w/  [...]
+;; (setq org-capture-templates
+;;       '(
+;; 	("w" "" entry ;; 'w' for 'org-protocol'
+;; 	 (file+headline "www.org" "Notes")
+;; 	 "* %^{Title}\nSource: %u, %c\n%i")
+;; 	("x" "" entry ;; 'w' for 'org-protocol'
+;; 	 (file+headline "clisp.org" "Notes")
+;; 	 "* %^{Title}\nSource: %u, %l\n%i")
+;; 	;;       "* %c%?\nSource: %u, %l\n%i")
+;; 	;; other templates
+;; 	))
 ;; * sanitize
 ;; (defun sanitize()
 ;;   (interactive)
@@ -1449,206 +1450,206 @@ When called in lisp code, if ξfrom is nil, returns a changed string, else, chan
 
 
 ;; * browse with conkeror OFF
-(setq browse-url-generic-program (executable-find "conkeror"))
-(setq browse-url-browser-function 'browse-url-generic)
-;; * mkdir
-(defun mdr()
-(interactive)
-(dired-create-directory (format-time-string "%y%m%d%H%M%S")))
-;; * screencast
-(defun bs()
-  (interactive)
-  (start-process "ScreenCast" "*ScreenCastBuffer*" "~/bin/recordmd")
-  (sleep-for 1.2)
-  (attachspeaker)
-  )
+;; (setq browse-url-generic-program (executable-find "conkeror"))
+;; (setq browse-url-browser-function 'browse-url-generic)
+;; ;; * mkdir
+;; (defun mdr()
+;; (interactive)
+;; (dired-create-directory (format-time-string "%y%m%d%H%M%S")))
+;; ;; * screencast
+;; (defun bs()
+;;   (interactive)
+;;   (start-process "ScreenCast" "*ScreenCastBuffer*" "~/bin/recordmd")
+;;   (sleep-for 1.2)
+;;   (attachspeaker)
+;;   )
 
-(defun as()
-  (interactive)
-  (call-process "jack_connect" nil "*scratch*" nil "system:capture_1" "ffmpeg:input_1")
-  (call-process "jack_connect" nil "*scratch*" nil "system:capture_2" "ffmpeg:input_2"))
+;; (defun as()
+;;   (interactive)
+;;   (call-process "jack_connect" nil "*scratch*" nil "system:capture_1" "ffmpeg:input_1")
+;;   (call-process "jack_connect" nil "*scratch*" nil "system:capture_2" "ffmpeg:input_2"))
 
-(defun ds()
-  (interactive)
-  (call-process "jack_disconnect" nil "*scratch*" nil "system:capture_1" "ffmpeg:input_1")
-  (call-process "jack_disconnect" nil "*scratch*" nil "system:capture_2" "ffmpeg:input_2"))
+;; (defun ds()
+;;   (interactive)
+;;   (call-process "jack_disconnect" nil "*scratch*" nil "system:capture_1" "ffmpeg:input_1")
+;;   (call-process "jack_disconnect" nil "*scratch*" nil "system:capture_2" "ffmpeg:input_2"))
 
-(defun ss()
-  (interactive)
-  (delete-process "ScreenCast"))
-;; * colorful hex
- (defvar hexcolour-keywords
-   '(("#[abcdef[:digit:]]\\{6\\}"
-      (0 (put-text-property (match-beginning 0)
-                            (match-end 0)
-                            'face (list :background
-                                        (match-string-no-properties 0)))))))
+;; (defun ss()
+;;   (interactive)
+;;   (delete-process "ScreenCast"))
+;; ;; * colorful hex
+;;  (defvar hexcolour-keywords
+;;    '(("#[abcdef[:digit:]]\\{6\\}"
+;;       (0 (put-text-property (match-beginning 0)
+;;                             (match-end 0)
+;;                             'face (list :background
+;;                                         (match-string-no-properties 0)))))))
 
- (defun hexcolour-add-to-font-lock ()
-   (font-lock-add-keywords nil hexcolour-keywords))
- (add-hook 'conf-space-mode-hook 'hexcolour-add-to-font-lock)
-;; * open folder in xdg-open
-(defun thunar ()
-  "Show current file in desktop (OS's file manager)."
-  (interactive)
-  (cond
-   ((string-equal system-type "windows-nt")
-    (w32-shell-execute "explore" (replace-regexp-in-string "/" "\\" default-directory t t)))
-   ((string-equal system-type "darwin") (shell-command "open ."))
-   ((string-equal system-type "gnu/linux")
-    (let ((process-connection-type nil)) (start-process "" nil "thunar" "."))
-    ;; (shell-command "xdg-open .") ;; 2013-02-10 this sometimes froze emacs till the folder is closed. ⁖ with nautilus
-    ) ))
+;;  (defun hexcolour-add-to-font-lock ()
+;;    (font-lock-add-keywords nil hexcolour-keywords))
+;;  (add-hook 'conf-space-mode-hook 'hexcolour-add-to-font-lock)
+;; ;; * open folder in xdg-open
+;; (defun thunar ()
+;;   "Show current file in desktop (OS's file manager)."
+;;   (interactive)
+;;   (cond
+;;    ((string-equal system-type "windows-nt")
+;;     (w32-shell-execute "explore" (replace-regexp-in-string "/" "\\" default-directory t t)))
+;;    ((string-equal system-type "darwin") (shell-command "open ."))
+;;    ((string-equal system-type "gnu/linux")
+;;     (let ((process-connection-type nil)) (start-process "" nil "thunar" "."))
+;;     ;; (shell-command "xdg-open .") ;; 2013-02-10 this sometimes froze emacs till the folder is closed. ⁖ with nautilus
+;;     ) ))
 
-;; * fonts
-(set-fontset-font
-   "fontset-default"
-   (cons (decode-char 'ucs #x0600) (decode-char 'ucs #x06ff)) ; arabic
-   "DejaVu Sans Mono")
-
-
-;; ** M-x pour droitier altG-!
-(global-set-key (kbd "¡") 'execute-extended-command)
-(global-set-key "÷" ctl-x-map)
-;; * entourer la selection de tags
-(defun entour (start end)
-  "Copy to the kill ring a string in the format \"file-name:line-number\"
-for the current buffer's file name, and the line number at point."
-  (interactive "r")
-  (goto-char end)
-  (insert "@@html:</span>@@")
-  (goto-char start)
-  (insert "@@html:<span class=\"bg-danger\">@@")
-
-  )
+;; ;; * fonts
+;; (set-fontset-font
+;;    "fontset-default"
+;;    (cons (decode-char 'ucs #x0600) (decode-char 'ucs #x06ff)) ; arabic
+;;    "DejaVu Sans Mono")
 
 
-;; * emamux
+;; ;; ** M-x pour droitier altG-!
+;; (global-set-key (kbd "¡") 'execute-extended-command)
+;; (global-set-key "÷" ctl-x-map)
+;; ;; * entourer la selection de tags
+;; (defun entour (start end)
+;;   "Copy to the kill ring a string in the format \"file-name:line-number\"
+;; for the current buffer's file name, and the line number at point."
+;;   (interactive "r")
+;;   (goto-char end)
+;;   (insert "@@html:</span>@@")
+;;   (goto-char start)
+;;   (insert "@@html:<span class=\"bg-danger\">@@")
 
-(defun aziz:send-command (b e)
-  "Send command to target-session of tmux"
-  (interactive "r")
-  (emamux:check-tmux-running)
-  (condition-case nil
-      (progn
-        (if (or current-prefix-arg (not (emamux:set-parameters-p)))
-            (emamux:set-parameters))
-        (let* ((target (emamux:target-session))
-               (prompt (format "Command [Send to (%s)]: " target))
-               (input  (buffer-substring-no-properties b e)))
-          (emamux:reset-prompt target)
-          (emamux:send-keys input)))
-      (quit (emamux:unset-parameters))))
-;; * dash
-;(setq helm-dash-browser-func 'w3m)
-;; * auto update dired
-(setq global-auto-revert-non-file-buffers t)
-(setq auto-revert-verbose nil)
-;(setq-default truncate-lines t)
-;; * meteo
-(setq sunshine-location "Mostaganem, DZ"
-      sunshine-units 'metric)
-;; * jabber facebook-gmail-chat moved to credential.el
-;; * twitter
-(add-hook 'twittering-new-tweets-hook (lambda ()
-   (let ((n twittering-new-tweets-count))
-     (start-process "twittering-notify" nil "notify-send"
-            ;        "-i" "/usr/share/pixmaps/gnome-emacs.png"
-                    "New tweets"
-                    (format "You have %d new tweet%s"
-                            n (if (> n 1) "s" ""))))))
-
-(setq twittering-use-master-password t)
-(setq twittering-icon-mode t)                ; Show icons
-(setq twittering-timer-interval 120)         ; Update your timeline each 300 seconds (5 minutes)
-(setq twittering-url-show-status nil)        ; Keeps the echo area from showing all the http processes
-(setq twittering-tinyurl-service 'bit.ly)
-(setq twittering-bitly-login "o_5n5e8dfc89")
-(setq twittering-bitly-api-key "R_62853b37260e4f7ba117510a053414a1")
+;;   )
 
 
-(setq browse-url-generic-program (executable-find "conkeror"))
-(setq browse-url-browser-function 'browse-url-generic)
-; (setq browse-url-browser-function (quote w3m-browse-url))
-; (setq browse-url-new-window-flag t)
-(add-hook 'twittering-edit-mode-hook (lambda () (ispell-minor-mode) (flyspell-mode)))
-(autoload 'twittering-numbering "twittering-numbering" nil t)
-(add-hook 'twittering-mode-hook 'twittering-numbering)
+;; ;; * emamux
 
-;; * ace-jump
-(add-to-list 'load-path "/home/aziz/.emacs.d/addons/")
-(autoload
-  'ace-jump-mode
-  "ace-jump-mode"
-  "Emacs quick move minor mode"
-  t)
-;; you can select the key you prefer to
-(define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
-;; * skype
-;; (add-to-list 'load-path "~/.emacs.d/addons/skype/")
-;; (require 'skype)
-;; (setq skype--my-user-handle "azizyemloul")
+;; (defun aziz:send-command (b e)
+;;   "Send command to target-session of tmux"
+;;   (interactive "r")
+;;   (emamux:check-tmux-running)
+;;   (condition-case nil
+;;       (progn
+;;         (if (or current-prefix-arg (not (emamux:set-parameters-p)))
+;;             (emamux:set-parameters))
+;;         (let* ((target (emamux:target-session))
+;;                (prompt (format "Command [Send to (%s)]: " target))
+;;                (input  (buffer-substring-no-properties b e)))
+;;           (emamux:reset-prompt target)
+;;           (emamux:send-keys input)))
+;;       (quit (emamux:unset-parameters))))
+;; ;; * dash
+;; ;(setq helm-dash-browser-func 'w3m)
+;; ;; * auto update dired
+;; (setq global-auto-revert-non-file-buffers t)
+;; (setq auto-revert-verbose nil)
+;; ;(setq-default truncate-lines t)
+;; ;; * meteo
+;; (setq sunshine-location "Mostaganem, DZ"
+;;       sunshine-units 'metric)
+;; ;; * jabber facebook-gmail-chat moved to credential.el
+;; ;; * twitter
+;; (add-hook 'twittering-new-tweets-hook (lambda ()
+;;    (let ((n twittering-new-tweets-count))
+;;      (start-process "twittering-notify" nil "notify-send"
+;;             ;        "-i" "/usr/share/pixmaps/gnome-emacs.png"
+;;                     "New tweets"
+;;                     (format "You have %d new tweet%s"
+;;                             n (if (> n 1) "s" ""))))))
 
-;; * auto-complete-elisp
-;    (require 'ac-slime)
-    (add-hook 'slime-mode-hook 'set-up-slime-ac)
-    (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
-    (eval-after-load "auto-complete"
-      '(add-to-list 'ac-modes 'slime-repl-mode))
-;; * emoji
-;(require 'company-emoji)
-;
-
-;(add-to-list 'company-backends 'company-emoji)
-;; * Git
-(add-to-list 'load-path "/usr/share/git-core/emacs/")
-(require 'git)
-;; * slime
-;(setq inferior-lisp-program "~/Bureau/ccl/lx86cl64")
-;; * stumpwm
-(load "/home/aziz/.stumpwm.d/contrib/util/swm-emacs/stumpwm-mode.el")
-;; * grep $PATH into shell-command
-(setq shell-command-switch "-c")
-(require 'shell-command)
-(shell-command-completion-mode)
-;; * common lisp/quicklisp integration
-(load (expand-file-name "~/quicklisp/slime-helper.el"))
-(setq inferior-lisp-program "sbcl")
-;; * display apostrophe in stanford courses transcript
-(standard-display-ascii ?\222 [?'])
-(standard-display-ascii ?\223 [?\"])
-(standard-display-ascii ?\224 [?\"])
-(standard-display-ascii ?\226 [?-])
+;; (setq twittering-use-master-password t)
+;; (setq twittering-icon-mode t)                ; Show icons
+;; (setq twittering-timer-interval 120)         ; Update your timeline each 300 seconds (5 minutes)
+;; (setq twittering-url-show-status nil)        ; Keeps the echo area from showing all the http processes
+;; (setq twittering-tinyurl-service 'bit.ly)
+;; (setq twittering-bitly-login "o_5n5e8dfc89")
+;; (setq twittering-bitly-api-key "R_62853b37260e4f7ba117510a053414a1")
 
 
-;; * findtop
-;; [[gnus:nnimap%2Bgmail:org-mode#87si568pk8.fsf@gmail.com][Email from Myles English: Re: {O} Return Top-Level Headi]]
-;; > Is there a way to reference the top-level heading that a lower-level
-;; > heading belongs to? For instance:
-;; >
-;; > * One
-;; > ** Two
-;; > *** Three
-;; >
-;; > If I have "Three", how can I get it to tell me that the top-level is "One"?
-;; > For reference, this is for an org-agenda-prefix.
+;; (setq browse-url-generic-program (executable-find "conkeror"))
+;; (setq browse-url-browser-function 'browse-url-generic)
+;; ; (setq browse-url-browser-function (quote w3m-browse-url))
+;; ; (setq browse-url-new-window-flag t)
+;; (add-hook 'twittering-edit-mode-hook (lambda () (ispell-minor-mode) (flyspell-mode)))
+;; (autoload 'twittering-numbering "twittering-numbering" nil t)
+;; (add-hook 'twittering-mode-hook 'twittering-numbering)
 
-;; Perhaps this:
+;; ;; * ace-jump
+;; (add-to-list 'load-path "/home/aziz/.emacs.d/addons/")
+;; (autoload
+;;   'ace-jump-mode
+;;   "ace-jump-mode"
+;;   "Emacs quick move minor mode"
+;;   t)
+;; ;; you can select the key you prefer to
+;; (define-key global-map (kbd "C-c SPC") 'ace-jump-mode)
+;; ;; * skype
+;; ;; (add-to-list 'load-path "~/.emacs.d/addons/skype/")
+;; ;; (require 'skype)
+;; ;; (setq skype--my-user-handle "azizyemloul")
 
-(defun findTop()
-    (interactive)
-    (let* ((tree (org-element-parse-buffer))
-           (curs_pos (point))
-           (up_tree (org-element-map tree 'headline
-                      (lambda (hl)
-                        (and (> curs_pos (org-element-property :begin hl))
-                             (= (org-element-property :level hl) 1)
-                             (org-element-property :raw-value hl) ))))
-           (local_up_tree (last up_tree)))
-      local_up_tree))
+;; ;; * auto-complete-elisp
+;; ;    (require 'ac-slime)
+;;     (add-hook 'slime-mode-hook 'set-up-slime-ac)
+;;     (add-hook 'slime-repl-mode-hook 'set-up-slime-ac)
+;;     (eval-after-load "auto-complete"
+;;       '(add-to-list 'ac-modes 'slime-repl-mode))
+;; ;; * emoji
+;; ;(require 'company-emoji)
+;; ;
 
-;;Myles
-;; * powerline
-(require 'powerline)
-;(powerline-default-theme)
-(powerline-center-theme)
+;; ;(add-to-list 'company-backends 'company-emoji)
+;; ;; * Git
+;; (add-to-list 'load-path "/usr/share/git-core/emacs/")
+;; (require 'git)
+;; ;; * slime
+;; ;(setq inferior-lisp-program "~/Bureau/ccl/lx86cl64")
+;; ;; * stumpwm
+;; (load "/home/aziz/.stumpwm.d/contrib/util/swm-emacs/stumpwm-mode.el")
+;; ;; * grep $PATH into shell-command
+;; (setq shell-command-switch "-c")
+;; (require 'shell-command)
+;; (shell-command-completion-mode)
+;; ;; * common lisp/quicklisp integration
+;; (load (expand-file-name "~/quicklisp/slime-helper.el"))
+;; (setq inferior-lisp-program "sbcl")
+;; ;; * display apostrophe in stanford courses transcript
+;; (standard-display-ascii ?\222 [?'])
+;; (standard-display-ascii ?\223 [?\"])
+;; (standard-display-ascii ?\224 [?\"])
+;; (standard-display-ascii ?\226 [?-])
+
+
+;; ;; * findtop
+;; ;; [[gnus:nnimap%2Bgmail:org-mode#87si568pk8.fsf@gmail.com][Email from Myles English: Re: {O} Return Top-Level Headi]]
+;; ;; > Is there a way to reference the top-level heading that a lower-level
+;; ;; > heading belongs to? For instance:
+;; ;; >
+;; ;; > * One
+;; ;; > ** Two
+;; ;; > *** Three
+;; ;; >
+;; ;; > If I have "Three", how can I get it to tell me that the top-level is "One"?
+;; ;; > For reference, this is for an org-agenda-prefix.
+
+;; ;; Perhaps this:
+
+;; (defun findTop()
+;;     (interactive)
+;;     (let* ((tree (org-element-parse-buffer))
+;;            (curs_pos (point))
+;;            (up_tree (org-element-map tree 'headline
+;;                       (lambda (hl)
+;;                         (and (> curs_pos (org-element-property :begin hl))
+;;                              (= (org-element-property :level hl) 1)
+;;                              (org-element-property :raw-value hl) ))))
+;;            (local_up_tree (last up_tree)))
+;;       local_up_tree))
+
+;; ;;Myles
+;; ;; * powerline
+;; (require 'powerline)
+;; ;(powerline-default-theme)
+;; (powerline-center-theme)

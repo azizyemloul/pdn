@@ -18,7 +18,7 @@
   (if (string= "org-mode" (symbol-name major-mode))
       (save-excursion
 	(find-file-other-window "~/org/diary.org")
-	(widen)	
+	(widen)
 	(goto-char (point-min))
 	(search-forward this-file nil t)
 	(org-entry-add-to-multivalued-property nil "BACKUPS" lien_fichier))
@@ -31,10 +31,9 @@
   )
 ;; * correction
 (defun correction()
-  "Replace “<” to “&lt;” and some other chars in HTML.
-This works on the current region."
+  "Mise en forme et début de la correction manuelle."
   (interactive)
-  (condition-case nil (backup-this-file) (error nil))  
+;  (condition-case nil (backup-this-file) (error nil))
   (dd)
 					; les questions
   (save-excursion
@@ -71,7 +70,7 @@ This works on the current region."
 	    ("^[\t ]*" "") ;; extraspaces
 	    ("  *" " ")
 	    (" *," ",")
-	    (" *\\." ".") 
+	    (" *\\." ".")
 	    ("^\\([^*+].*\\)\\([^?\n]\\)$" "\\1\\2.") ;;lineendpoint
 	    ("^\\([0-9A-Z]\\)$" "\\1.") ;; orphelines pointe
 	    (",,,*" "...")
@@ -116,7 +115,7 @@ This works on the current region."
 	  ("oeil"  "œil" t)
 	  ("oeuvre"  "œuvre" t)
 	  ("soeur"  "sœur" t)
-	  
+
 ;; ** tiret interrogation
 	  (" t il\\>"  "-t-il")
 	  ("\\([^ ]ez\\)\\ \\(vous\\)"  "\\1-\\2")
@@ -128,7 +127,7 @@ This works on the current region."
 	  ("\\<qu'est ce que\\>"  "qu'est-ce que")
 	  ("\\<que faites vous\\>"  "que faites-vous")
 	  ("a t elle\\>"  "a-t-elle")
-	  
+
 ;; ** trait d'union
 	  ("\\<au dela\\>"  "au-delà" t)
 	  ("\\<elle même\\>"  "elle-même")
@@ -150,8 +149,8 @@ This works on the current region."
 	  ("soi même"  "soi-même")
 	  ("toi même"  "toi-même")
 	  ("vous même"  "vous-même")
-	  
-;; ** tiret démonstratif 
+
+;; ** tiret démonstratif
 	  ("\\<ce \\([^ ]*\\) ci\\>"  "ce \\1-ci" t)
 	  ("\\<ce \\([^ ]*\\) là\\>"  "ce \\1-là" t)
 	  ("\\<ces \\([^ ]*\\) là\\>"  "ces \\1-là" t)
@@ -165,7 +164,7 @@ This works on the current region."
 	  ("celles là"  "celles-là" t)
 	  ("ceux ci"  "ceux-ci" t)
 	  ("ceux là"  "ceux-là" t)
-	  
+
 ;; ** fautes invisibles à l'orthographe
 	  ("\\<pe\\>"  "peut-être")
 	  (" '\\(\\w\\)"  " \\1'")
@@ -190,8 +189,8 @@ This works on the current region."
 	  ("\\<sut\\>"  "sur")
 	  ("\\<te\\>"  "et")
 	  ("\\<une je\\>"  "que je")
-	  
-;; ** conjugaison premiere personne du singulier 
+
+;; ** conjugaison premiere personne du singulier
 	  ("\\<j'\\([^ ]*\\) pas\\>"  "je n'\\1 pas")
 	  ("\\<j'ai dis\\>"  "j'ai dit" t)
 	  ("\\<j'ai fais\\>"  "j'ai fait" t)
@@ -207,24 +206,24 @@ This works on the current region."
 	  ("\\<je ne \\([^ ]*\\)ait\\>"  "je ne \\1ais")
 	  ("\\<je ne \\([^ ]*\\)end pas\\>"  "je ne \\1ends pas")
 	  ("\\<je ne prend\\>"  "je ne prends" t)
-	  
+
 ;; ** conjugaison 3e personne
 	  ("\\<ça \\([^ ]*[^m]\\)ais\\>"  "ça \\1ait")
-	  
+
 ;; ** accords pluriels et féminins
 	  ("\\<quelque fois\\>"  "quelques fois" t)
 	  ("\\<de façon naturel\\>"  "de façon naturelle" t)
-	  
+
 ;; ** virgules
 	  ("\\<et là "  "et là, " t)
 	  ("\\<ça ça\\>"  "ça, ça" t)
-	  
+
 ;; ** négations
 	  ;; ("\\<c'est pas\\>"  "ce n'est pas" t)
 	  ;; ("\\<je \\([^n ][^' ][^ ]*\\) pas \\([^m][^a][^l]\\)\\>"  "je ne \\1 pas \\2")
 	  ("\\<n y\\>"  "n'y" t)
 	  ;; ("\\<t'\\([^ ]*\\) pas\\> "  "tu n'\\1 pas")
-	  
+
 ;; ** lettres orphelines
 	  ("\\<[^aày0-9A-Z%]\\>"  "\\?" t)
 	  )

@@ -125,7 +125,7 @@ Collecte les informations des fichiers audio.
 			  (lambda ()
 			    (let (exist)
 			      (setq exist (org-entry-get nil "MEDIAS")))))
-   destination (concat "~/org/audio/" (format-time-string "%m-%Y") "/")
+   destination (concat "./" (format-time-string "%m-%Y") "/")
    )
   ;; pour chaque nouveau fichier
   (while nouveaux-fichiers
