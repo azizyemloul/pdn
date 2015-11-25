@@ -6,9 +6,16 @@ Elles sont propres à GNU/Emacs.
 
 Une documentation détaillée à ce propos sera hébergée sur [[http:stenopad.alwaysdata.net][Stenopad]]
 
-* Installation fraîche
+* Compilation emacs
 #+BEGIN_EXAMPLE
 sudo aptitude install build-essential libxml2-dev libm17n-dev libotf-dev libselinux-dev xaw3dg-dev librsvg2-dev libgpm-dev libgnutls-dev libmagickcore-dev libgnutls-deb0-28
 sudo aptitude install libx11-dev libxpm-dev libjpeg-dev libpng-dev libgif-dev libtiff-dev libgtk2.0-dev libncurses-dev
 sudo aptitude install aspell-fr
 #+END_EXAMPLE
+* pdn.git
+#+BEGIN_SRC sh
+git init
+git remote add origin https://github.com/azizyemloul/pdn.git
+git pull
+git branch --track new_install origin/new_install
+#+END_SRC
