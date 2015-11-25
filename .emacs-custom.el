@@ -326,7 +326,6 @@ The document was typeset with
  '(bookmark-default-file "~/.emacs.d/emacs.bmk")
  '(bookmark-save-flag 1)
  '(browse-url-browser-function (quote browse-url-generic))
- '(browse-url-generic-program "chrome")
  '(cal-html-print-day-number-flag t)
 '(calendar-day-name-array
 ["Dimanche" "Lundi" "Mardi" "Merecredi" "Jeudi" "Vendredi" "Samedi"])
@@ -369,6 +368,7 @@ The document was typeset with
  '(history-length t)
  '(ido-enable-flex-matching t)
  '(ido-ignore-buffers (quote ("\\` " "\\*helm")))
+ '(ido-show-dot-for-dired t)
  '(inferior-lisp-program "clisp" t)
  '(inhibit-default-init t)
  '(inhibit-startup-screen t)
