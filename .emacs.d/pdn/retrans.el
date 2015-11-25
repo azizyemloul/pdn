@@ -121,10 +121,15 @@ Collecte les informations des fichiers audio.
    ;; mettre la liste des fichiers audios dans une liste nouveaux-fichiers
    nouveaux-fichiers (directory-files "." t "\\(wma\\|mp3\\|wav\\|WMA\\|MP3\\|WAV\\|flv\\|ogg\\|avi\\|wmv\\)$") ;
    ;; mettre les médias déjà présents dans le fichier dans une liste fichiers-enregistrés
-   fichiers-enregistrés  (org-map-entries
-			  (lambda ()
-			    (let (exist)
-			      (setq exist (org-entry-get nil "MEDIAS")))))
+   fichiers-enregistrés (let ((file  (buffer-file-name)))
+			  (org-map-entries
+			   (lambda ()
+			     (let (exist)
+			       (setq exist (org-entry-get nil "MEDIAS")))) nil (list file)))
+   ;; fichiers-enregistrés  (org-map-entries
+   ;; 			  (lambda ()
+   ;; 			    (let (exist)
+   ;; 			      (setq exist (org-entry-get nil "MEDIAS")))))
    destination (concat "~/org/audio/" (format-time-string "%m-%Y") "/")
    )
   ;; pour chaque nouveau fichier
