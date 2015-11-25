@@ -41,9 +41,9 @@
 ;; * elpa packages begins here
 (package-initialize)
 ;; ** emacs as X window manager conf is here
-(require 'exwm)
-(require 'exwm-config)
-(exwm-config-default)
+;; (require 'exwm)
+;; (require 'exwm-config)
+;; (exwm-config-default)
 ;; *** Application launcher
 ;; (exwm-input-set-key (kbd "s-&")
 ;;                     (lambda (command)
@@ -143,6 +143,7 @@
 	dired-omit-files			"^\\.?#\\|^\\.$\\|^\\.\\.$\\|^\\."
 	frame-title-format		'(buffer-file-name "%b (%f)" "%b")
 	indicate-empty-lines		t
+	save-place			t
 	)
 
 ;(add-to-list 'load-path "~/.emacs.d/pdn/")
