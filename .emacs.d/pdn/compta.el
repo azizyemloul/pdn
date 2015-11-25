@@ -6,7 +6,7 @@
    facture_n		(org-entry-get nil "facture_n")
    pu_m2_text		(or (org-entry-get nil "TARIF") "45")
    periode		(org-entry-get nil "periode")
-   m1			(or (org-entry-get nil "m1") "Retranscription")
+   m1			(or (org-entry-get nil "m1") "Prise de notes différée")
    facture_date		(or (org-entry-get nil "emic") (format-time-string "%d-%m-%Y"))
 
    temps_retrans_s	(apply '+ ;;; faire la somme des secondes ENTIER
@@ -42,6 +42,8 @@
    frais_ttc		""
    montant_total	total_ttc
    )
+
+  (org-entry-put nil "TARIF" pu_m2_text)
   (org-entry-put nil "HT" montant_ht)
   (org-entry-put nil "TVA" tva)
   (org-entry-put nil "TotalTTC" total_ttc)
