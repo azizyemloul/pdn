@@ -1653,3 +1653,16 @@ for the current buffer's file name, and the line number at point."
 (require 'powerline)
 ;(powerline-default-theme)
 (powerline-center-theme)
+(put 'downcase-region 'disabled nil)
+;; * sort-randomly
+(defun sort-lines-randomly (beg end)
+                       "Sort lines in region randomly."
+                       (interactive "r")
+                       (save-excursion
+                         (save-restriction
+                           (narrow-to-region beg end)
+                           (goto-char (point-min))
+			   (let ;; To make `end-of-line' and etc. to ignore fields.
+                               ((inhibit-field-text-motion t))
+                             (sort-subr nil 'forward-line 'end-of-line nil nil
+                                        (lambda (s1 s2) (eq (random 2) 0)))))))
