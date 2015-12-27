@@ -234,9 +234,10 @@ Collecte les informations des fichiers audio.
 ;; * orgTimeSecondsToString
 (defun org-time-seconds-to-string (secs)
   "Convert a number of seconds to a time string."
-  (cond ((>= secs 3600) (format-seconds "%.2h:%.2m:%.2s" secs))
-	((>= secs 60) (format-seconds "%.2h:%.2m:%.2s" secs))
-	(t (format-seconds "%s" secs))))
+  (format-seconds "%.2h:%.2m:%.2s" secs))
+  ;; (cond ((>= secs 3600) (format-seconds "%.2h:%.2m:%.2s" secs))
+  ;; 	((>= secs 60) (format-seconds "%.2h:%.2m:%.2s" secs))
+  ;; 	(t (format-seconds "%.2h:%.2m:%.2s" secs))))
 ;; * azizFormatTime
 (defun aziz--format-time (time)
   "Return a formatted time string, using the format string

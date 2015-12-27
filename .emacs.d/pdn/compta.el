@@ -27,7 +27,7 @@
 		    (setq w (substring-no-properties (match-string 4))))
 
    quantite_m2_integer1 (/ temps_retrans_s 3600.00)
-   quantite_m2_text (format "%.1f" quantite_m2_integer1)
+   quantite_m2_text (format "%.2f" quantite_m2_integer1)
    quantite_m2_integer (string-to-number quantite_m2_text)
 
    pu_m2_integer	(string-to-number pu_m2_text)
@@ -345,21 +345,46 @@
 (defun parse-realeffort()
   "Déduire le temps de la réunion à partir du premier et du dernier marquage temps du document et le convertir en propriété Real"
   (interactive)
-  (goto-char (point-min))
-  (search-forward-regexp "^- \\([0-9]\\{0,2\\}\\):\\{0,1\\}\\([0-9]\\{0,2\\}\\):\\{0,1\\}\\([0-9]\\{1,2\\}\\) ::")
-  (setq hd (match-string 1))
-  (setq md (match-string 2))
-  (goto-char (point-max))
-  (search-backward-regexp "^- \\([0-9]\\{0,2\\}\\):\\{0,1\\}\\([0-9]\\{0,2\\}\\):\\{0,1\\}\\([0-9]\\{1,2\\}\\) ::")
-  (setq hf (match-string 1))
-  (setq mf (match-string 2))
-  (setq effort
-	(org-time-seconds-to-string (-
-				     (org-time-string-to-seconds (concat hf ":" mf))
-				     (org-time-string-to-seconds (concat hd ":" md))
-				     )))
-  (goto-char (point-min))
-  (org-entry-put nil "Real" effort))
+  (let (
+	(time-code-pattern "^- \\([0-9]\\{0,2\\}\\):\\{0,1\\}\\([0-9]\\{0,2\\}\\):\\{0,1\\}\\([0-9]\\{1,2\\}\\) ::")
+	)
+    (save-excursion
+      (goto-char (point-min))
+      (search-forward-regexp time-code-pattern)
+      (setq hd (match-string 1)
+	    md (match-string 2)
+	    sd (match-string 3)
+	    )
+      (goto-char (point-max))
+      (search-backward-regexp time-code-pattern)
+      (setq hf (match-string 1)
+	    mf (match-string 2)
+	    sf (match-string 3)
+	    )
+      (setq effort
+	    (org-time-seconds-to-string (-
+					 (org-time-string-to-seconds (concat hf ":" mf ":" sf))
+					 (org-time-string-to-seconds (concat hd ":" md ":" sd))
+					 )))
+      (goto-char (point-min))
+      (org-entry-put nil "Real" effort))))
+
+  ;; (setq time-code-pattern "^- \\([0-9]\\{0,2\\}\\):\\{0,1\\}\\([0-9]\\{0,2\\}\\):\\{0,1\\}\\([0-9]\\{1,2\\}\\) ::")
+  ;; (goto-char (point-min))
+  ;; (search-forward-regexp time-code-pattern)
+  ;; (setq hd (match-string 1)
+  ;; 	md (match-string 2))
+  ;; (goto-char (point-max))
+  ;; (search-backward-regexp time-code-pattern)
+  ;; (setq hf (match-string 1)
+  ;; 	mf (match-string 2))
+  ;; (setq effort
+  ;; 	(org-time-seconds-to-string (-
+  ;; 				     (org-time-string-to-seconds (concat hf ":" mf))
+  ;; 				     (org-time-string-to-seconds (concat hd ":" md))
+  ;; 				     )))
+  ;; (goto-char (point-min))
+  ;; (org-entry-put nil "Real" effort))
 
 ;; * parseEffortAll
 (defun parse-effort-all()
