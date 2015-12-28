@@ -69,6 +69,7 @@
 ;; (require 'emamux)
 ;; (file-props-dired-activate-display)
 ;; (file-props-dired-setup-keybindings)
+(require 'w3m)
 (require 'dired-x)
 (load-library	"server")
 (load-library	"savehist")
@@ -88,10 +89,11 @@
 (tool-bar-mode		0)
 (menu-bar-mode		1)
 (savehist-mode		1)
+(ido-mode		1)
 ;(desktop-save-mode      1)
 (global-auto-revert-mode t)
 (if (not (server-running-p))  (server-start))
-(eshell)
+;(eshell)
 
 ;; * VARIABLES
 

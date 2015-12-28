@@ -394,8 +394,8 @@ The document was typeset with
  '(mls-disk-format "%p")
  '(mls-memory-format "%R %R %S %R")
  '(org-agenda-columns-add-appointments-to-effort-sum t)
- '(org-agenda-diary-file "~/org/diary.org")
- '(org-agenda-files (quote ("~/org/diary.org")))
+ ;; '(org-agenda-diary-file "~/org/diary.org")
+ ;; '(org-agenda-files (quote ("~/org/diary.org")))
  '(org-agenda-insert-diary-strategy (quote top-level))
  '(org-agenda-menu-two-columns t)
  '(org-agenda-property-list (quote ("lieux")))
@@ -486,7 +486,7 @@ The document was typeset with
   ("" "xcolor" t)
   ("" "geometry" nil))))
  '(org-latex-tables-column-borders t)
- '(org-mobile-files (quote ("~/org/diary.org")))
+; '(org-mobile-files (quote ("~/org/diary.org")))
 '(org-modules
 (quote
  (org-protocol org-bbdb org-gnus org-w3m org-toc org-jsinfo)))
