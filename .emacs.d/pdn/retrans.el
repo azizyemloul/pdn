@@ -124,7 +124,7 @@ format."
 
   ;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-06/msg00123.html
   (insert " ")
-  (delete-backward-char)
+  (delete-backward-char 1)
   (save-buffer)
   (let
       (
