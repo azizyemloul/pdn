@@ -112,106 +112,59 @@ format."
     (insert ":: ")))
 ;; * Traff
 (defun traff()
-  "Préparer un document pour mplayer-mode.
-Collecte les informations des fichiers audio.
-/traff/ utilise `chomp' `lomp' et `hmgn'"
+  "Transforme les fichiers audio dans le répertoire courant en titres"
   (interactive)
-  (setq
-   jesuisici (current-buffer) ;;mon buffer
-   ;; mettre la liste des fichiers audios dans une liste nouveaux-fichiers
-   nouveaux-fichiers (directory-files "." t "\\(wma\\|mp3\\|wav\\|WMA\\|MP3\\|WAV\\|flv\\|ogg\\|avi\\|wmv\\)$") ;
-   ;; mettre les médias déjà présents dans le fichier dans une liste fichiers-enregistrés
-   fichiers-enregistrés (let ((file  (buffer-file-name)))
-			  (org-map-entries
-			   (lambda ()
-			     (let (exist)
-			       (setq exist (org-entry-get nil "MEDIAS")))) nil (list file)))
-   ;; fichiers-enregistrés  (org-map-entries
-   ;; 			  (lambda ()
-   ;; 			    (let (exist)
-   ;; 			      (setq exist (org-entry-get nil "MEDIAS")))))
-   destination (concat "~/org/audio/" (format-time-string "%m-%Y") "/")
-   )
-  ;; pour chaque nouveau fichier
-  (while nouveaux-fichiers
-    (setq chemin-et-nom  (pop nouveaux-fichiers)
-	  nom-de-fichier (file-name-nondirectory chemin-et-nom))
-    (if (eq (member nom-de-fichier fichiers-enregistrés) nil)
-	(progn
-	  (setq chemin-complet (file-name-directory chemin-et-nom)
-		nouveau-titre  (file-name-sans-extension nom-de-fichier)
-		date-reception (format-time-string "%a %d-%m-%y %H:%M" (nth 5 (file-attributes nom-de-fichier))))
-	  ;; vérifier que seuls les nouveaux fichiers seront traités
-	  (insert (concat "* " nouveau-titre "\n"))
-	  (org-todo)
-	  (org-entry-put nil "ORIGIN" nouveau-titre)
-	  (org-entry-put nil "CHEMIN" destination)
-	  (org-entry-put nil "MEDIAS" nom-de-fichier)
-	  (org-entry-put nil "REÇULE" date-reception)
-	  ;; on travaille sur la sortie de exiftool
-	  (with-temp-buffer
-	    (setq informations (substring (shell-command-to-string (concat "exiftool '" chemin-et-nom "'")) 0 -1))
-	    (insert informations)
-	    (setq moreline t)
-	    (goto-char (point-min))
-	    (while moreline
-	      (catch 'cbon
-		(search-forward ":" nil t 1)
-		(setq splt (1- (point)))
-		(beginning-of-line)
-		(setq brut (buffer-substring-no-properties (point) splt))
-		(string-match "[ \t]*$" brut)
-		(setq prprt (replace-match "" nil nil brut))
-		(setq prprt (chomp prprt))
-		(setq prprt (lomp prprt))
-		;; éliminer les tags inutiles
-		(if (member prprt '("ExifTool_Version_Number" "File_Name" "File_ID" "File_Modification_Date_Time"
-				    "Stream_Type" "Time_Offset" "ID3_Size" "MIME_Type" "Channel_Mode" "Stream_Number"
-				    "File_Permissions"   "MPEG_Audio_Version" "Creation_Date" "Error_Correction_Type"
-				    "Audio_Layer" "MS_Stereo" "Intensity_Stereo" "Copyright_Flag" "Original_Media"
-				    "Emphasis"  "Directory" "Data_Packets" "Send_Duration" "Audio_Channels"
-				    "Preroll" "Flags" "Min_Packet_Size" "Max_Packet_Size" "Max_Bitrate" "Audio_Codec_ID"
-				    "Audio_Codec_Name" "Audio_Codec_Description"))
-		    (progn
-		      (end-of-line)
-		      (throw 'cbon t)))
-		;; changer Play_dration et duration en Effort
-		(if (member prprt '("Play_Duration" "Duration"))
-		    (setq prprt "Effort"))
-		(end-of-line)
-		(setq vlr (buffer-substring-no-properties  (+ 1 splt) (point)))
-		(string-match " *" vlr)
-		(setq vlr (replace-match "" nil nil vlr))
-		;; convertir le poids
-		(if (string= prprt "File_Size")
-		    (if (eq (string-match "MB" vlr) nil)
-			(setq vlr (concat
-				   (format "%.2f" (/ (string-to-number vlr) 1048576.0))
-				   " MB"))
-		      (setq vlr vlr)))
-		(if (string= prprt "Effort")
-		    (if (string-match "^\\([0-9][0-9]:[0-9][0-9]\\)$" vlr)
-			(setq vlr (hmgn vlr))))
-		;; (setq vlr (hmgn vlr)))
-		(if (string= prprt "Effort")
-		    (if (string-match "(approx)" vlr)
-			(setq vlr (replace-match "" nil nil vlr))))
-		;; on insère les orgmode PROPERTIES
-		(with-current-buffer jesuisici
-		  (org-entry-put nil prprt vlr))
-		(end-of-line)
-		(setq moreline (= 0 (forward-line 1)))
-		))
-	    )
-	  (insert "\n** Intro\n- 00:00:01 ::\n\n")
-	  ;; (if (file-exists-p destination)
-	  ;;     (rename-file nom-de-fichier destination)
-	  ;;   (progn
-	  ;;     (make-directory destination)
-	  ;;     (rename-file nom-de-fichier destination)))
-	  )
-      (message "%s existe déjà" nom-de-fichier))
-    ))
+  ;; org-map-entries calls org-prepare-agenda-buffers like this:
+
+  ;; (org-prepare-agenda-buffers
+  ;;  (list (buffer-file-name (current-buffer))))
+
+  ;; In turn, this calls org-check-agenda-file() and if the current buffer
+  ;; has not been written out yet, this pops the question.
+
+  ;; https://lists.gnu.org/archive/html/emacs-orgmode/2012-06/msg00123.html
+  (insert " ")
+  (delete-backward-char)
+  (save-buffer)
+  (let
+      (
+      					; mettre les fichiers audios dans le répertoire courant dans une liste nommée nouveaux-fichiers
+       (nouveaux-fichiers (directory-files "." t "\\(wma\\|mp3\\|wav\\|WMA\\|MP3\\|WAV\\|flv\\|ogg\\|avi\\|wmv\\)$")) ;
+      					; mettre les médias déjà consignés dans le fichier courant dans une liste nommée fichiers-enregistrés
+       (fichiers-enregistrés  (org-map-entries
+      			       (lambda ()
+      				 (let (exist)
+      				   (setq exist (org-entry-get nil "MEDIAS"))))))
+       )
+
+					; pour chaque nouveau fichier
+    (while nouveaux-fichiers
+      (setq chemin-et-nom  (pop nouveaux-fichiers)
+	    nom-de-fichier (file-name-nondirectory chemin-et-nom))
+      (if (not (member nom-de-fichier fichiers-enregistrés))
+	  (let(
+	       (chemin-complet (file-name-directory chemin-et-nom))
+	       (nouveau-titre  (file-name-sans-extension nom-de-fichier))
+	       (date-reception (format-time-string "%a %d-%m-%y %H:%M" (nth 5 (file-attributes nom-de-fichier))))
+	       )
+					; vérifier que seuls les nouveaux fichiers seront traités
+	    (insert (concat "* " nouveau-titre "\n"))
+	    (org-todo)
+	    (org-entry-put nil "ORIGIN" nouveau-titre)
+	    (org-entry-put nil "CHEMIN" "./")
+	    (org-entry-put nil "MEDIAS" nom-de-fichier)
+	    (org-entry-put nil "REÇULE" date-reception)
+	    (org-entry-put nil "Effort"
+			   (let (
+				 (infos (shell-command-to-string (concat "ffprobe \"" chemin-et-nom "\"")))
+				 )
+			     (string-match "Duration: \\([^,]*\\)" infos)
+			 (match-string 1 infos)))
+	    (insert "\n** Intro\n- 00:00:01 ::\n")
+	    ))
+	(message "%s existe déjà" nom-de-fichier))
+      )
+    )
 ;; * orgTimeStringToSeconds
 (defun org-time-string-to-seconds (s)
   "Convert a string HH:MM:SS to a number of seconds."
