@@ -111,9 +111,16 @@ format."
     (org-timer (if arg '(4)))
     (insert ":: ")))
 ;; * Traff
-(defun traff()
+(defun traff(dirToScan)
   "Transforme les fichiers audio dans le répertoire courant en titres"
-  (interactive)
+  (interactive
+   (cond
+    ((equal current-prefix-arg '(4))
+     (list (read-directory-name "Dir to Scan (current): " nil "./" t)))
+    (t
+     (list "./"))
+    )
+   )
   ;; org-map-entries calls org-prepare-agenda-buffers like this:
 
   ;; (org-prepare-agenda-buffers
@@ -129,14 +136,14 @@ format."
   (let
       (
       					; mettre les fichiers audios dans le répertoire courant dans une liste nommée nouveaux-fichiers
-       (nouveaux-fichiers (directory-files "." t "\\(wma\\|mp3\\|wav\\|WMA\\|MP3\\|WAV\\|flv\\|ogg\\|avi\\|wmv\\)$")) ;
+       (nouveaux-fichiers (directory-files dirToScan t "\\(wma\\|mp3\\|wav\\|WMA\\|MP3\\|WAV\\|flv\\|ogg\\|avi\\|wmv\\|mp4\\)$")) ;
       					; mettre les médias déjà consignés dans le fichier courant dans une liste nommée fichiers-enregistrés
        (fichiers-enregistrés  (org-map-entries
       			       (lambda ()
       				 (let (exist)
       				   (setq exist (org-entry-get nil "MEDIAS"))))))
        )
-
+					; (file-name-directory (nth 3 (directory-files "./" t)))
 					; pour chaque nouveau fichier
     (while nouveaux-fichiers
       (setq chemin-et-nom  (pop nouveaux-fichiers)
@@ -151,7 +158,7 @@ format."
 	    (insert (concat "* " nouveau-titre "\n"))
 	    (org-todo)
 	    (org-entry-put nil "ORIGIN" nouveau-titre)
-	    (org-entry-put nil "CHEMIN" "./")
+	    (org-entry-put nil "CHEMIN" chemin-complet)
 	    (org-entry-put nil "MEDIAS" nom-de-fichier)
 	    (org-entry-put nil "REÇULE" date-reception)
 	    (org-entry-put nil "Effort"
@@ -159,7 +166,7 @@ format."
 				 (infos (shell-command-to-string (concat "ffprobe \"" chemin-et-nom "\"")))
 				 )
 			     (string-match "Duration: \\([^,]*\\)" infos)
-			 (match-string 1 infos)))
+			     (match-string 1 infos)))
 	    (insert "\n** Intro\n- 00:00:01 ::\n")
 	    ))
 	(message "%s existe déjà" nom-de-fichier))
