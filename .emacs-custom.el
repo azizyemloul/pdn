@@ -580,6 +580,54 @@ The document was typeset with
 (quote
  (("http://tychoish.com/" "tychoish – Visits, Modes, and Forms — tychoish" nil)
   ("https://github.com/ch11ng/exwm/wiki" "Home · ch11ng/exwm Wiki · GitHub" nil))))
+'(w3m-content-type-alist
+(quote
+ (("text/plain" "\\.\\(?:txt\\|tex\\|el\\)\\'" nil nil)
+  ("text/html" "\\.s?html?\\'" browse-url-default-browser nil)
+  ("text/sgml" "\\.sgml?\\'" nil "text/plain")
+  ("text/xml" "\\.xml\\'" nil "text/plain")
+  ("image/jpeg" "\\.jpe?g\\'"
+   ("/usr/bin/feh" file)
+   nil)
+  ("image/png" "\\.png\\'"
+   ("/usr/bin/feh" file)
+   nil)
+  ("image/gif" "\\.gif\\'"
+   ("/usr/bin/feh" file)
+   nil)
+  ("image/tiff" "\\.tif?f\\'"
+   ("/usr/bin/display" file)
+   nil)
+  ("image/x-xwd" "\\.xwd\\'"
+   ("/usr/bin/display" file)
+   nil)
+  ("image/x-xbm" "\\.xbm\\'"
+   ("/usr/bin/display" file)
+   nil)
+  ("image/x-xpm" "\\.xpm\\'"
+   ("/usr/bin/display" file)
+   nil)
+  ("image/x-bmp" "\\.bmp\\'"
+   ("/usr/bin/display" file)
+   nil)
+  ("video/mpeg" "\\.mpe?g\\'" nil nil)
+  ("video/quicktime" "\\.mov\\'" nil nil)
+  ("application/dvi" "\\.dvi\\'"
+   ("xdvi" file)
+   nil)
+  ("application/postscript" "\\.e?ps\\'"
+   ("gs" file)
+   nil)
+  ("application/pdf" "\\.pdf\\'"
+   ("xpdf" file)
+   nil)
+  ("application/x-pdf" "\\.pdf\\'"
+   ("xpdf" file)
+   nil)
+  ("application/xml" "\\.xml\\'" nil w3m-detect-xml-type)
+  ("application/rdf+xml" "\\.rdf\\'" nil "text/plain")
+  ("application/rss+xml" "\\.rss\\'" nil "text/plain")
+  ("application/xhtml+xml" nil nil "text/html"))))
  '(w3m-cookie-accept-bad-cookies t)
  '(w3m-default-display-inline-images nil)
  '(w3m-home-page "http://localhost")
