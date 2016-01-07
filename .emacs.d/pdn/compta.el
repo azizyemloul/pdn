@@ -2,7 +2,8 @@
 (defun facv()
   (interactive)
   (setq
-   client		(if (looking-at org-complex-heading-regexp) (setq leff (substring (substring-no-properties (match-string 5)) 1 -1)))
+   client		(if (looking-at org-complex-heading-regexp)
+			    (setq leff (substring (substring-no-properties (match-string 5)) 1 -1)))
    facture_n		(org-entry-get nil "facture_n")
    pu_m2_text		(or (org-entry-get nil "TARIF") "45")
    periode		(org-entry-get nil "periode")
@@ -969,3 +970,118 @@ Exemple:
 ;; 		      )
 ;; 		     )
 ;; 		    )
+;; * newfac
+
+(defun newfac()
+  (interactive)
+  ;; Dermato BelAbidi 045 26 62 98
+  ;; client_nom
+  ;; client_adress
+  ;; client_ville
+  ;; client_pays
+  ;; client_info_comp
+  ;; client_interlocuteur
+	  facture_n		(or (org-entry-get nil "facture_n") nil)
+	  facture_date		(or (org-entry-get nil "emic") (format-time-string "%d-%m-%Y"))
+
+	  ;;m1
+	  quantité_m1		(or (org-entry-get nil "q_m1") nil)
+	  m1			(or (org-entry-get nil "m1") "Prise de notes différée")
+	  pu_m1			(or (org-entry-get nil "pu_m1") nil)
+	  montant_m1		(if quantité_m1 ;; number
+				    (let (
+					  (quantité_m1_f (string-to-number quantité_m1))
+					  (pu_m1_f (string-to-number pu_m1))
+					  )
+				      (* quantité_m1_f pu_m1_f)))
+	  ;;m2
+
+	  (if (not (org-entry-get nil "m2"))
+
+	      (number-to-string nil)
+
+
+
+
+
+
+	  quantite_m2		(or (org-entry-get nil "q_m2") "")
+	  m2			(or (org-entry-get nil "m2")
+				    (if (looking-at org-complex-heading-regexp)
+					(setq w (substring-no-properties (match-string 4)))))
+	  pu_m2			(or (org-entry-get nil "pu_m1") (org-entry-get nil "TARIF") "45")
+	  montant_m2		(if quantite_m2 ;; number
+				    (let (
+					  (quantité_m2_f (string-to-number quantite_m2))
+					  (pu_m2_f (string-to-number pu_m2))
+					  )
+				      (* quantite_m2_f pu_m2_f)))
+	  ;;m3
+	  quantite_m3		(or (org-entry-get nil "q_m3") nil)
+	  m3			(or (org-entry-get nil "m3") nil)
+	  pu_m3			(or (org-entry-get nil "pu_m3") nil)
+	  montant_m3		(if quantite_m3 ;; number
+				    (let (
+					  (quantité_m3_f (string-to-number quantite_m3))
+					  (pu_m3_f (string-to-number pu_m3))
+					  )
+				      (* quantite_m3_f pu_m3_f)))
+	  ;;m4
+	  quantite_m4		(or (org-entry-get nil "q_m4") nil)
+	  m4			(or (org-entry-get nil "m4") nil)
+	  pu_m4			(or (org-entry-get nil "pu_m4") nil)
+	  montant_m4		(if quantite_m4 ;; number
+				    (let (
+					  (quantité_m4_f (string-to-number quantite_m4))
+					  (pu_m4_f (string-to-number pu_m4))
+					  )
+				      (* quantite_m4_f pu_m4_f)))
+	  ;;
+	  periode		(or (org-entry-get nil "periode") nil)
+	  ;;calc
+	  montant_ht_i		(apply '+ (list (or montant_m1 0) (or montant_m2 0) (or montant_m3 0) (or montant_m4 0)))
+	  montant_ht		(format "%.2f" montant_ht_i)
+	  tva			(format "%.2f" (* montant_ht_i 0.2))
+	  total_ttc		(format "%.2f" (* montant_ht_i 1.2))
+	  frais_ttc		(or (org-entry-get nil "frais") nil)
+	  montant_total		(if frais_ttc (format "%.2f" (+ (* montant_ht_i 1.2) frais_ttc)) (format "%.2f" (* montant_ht_i 1.2)))
+	  ;; ignore
+	  type_paiement
+	  type_reglement
+	  )
+
+(apply '+ (list (or nil 0) 3 4 (or nil 0)))
+
+
+(let
+    (
+     (frais_ttc 70.75)
+     (montant_ht_i 450.897)
+     )
+(if frais_ttc
+    (format "%.2f" (+ (* montant_ht_i 1.2) frais_ttc))
+  (format "%.2f" (* montant_ht_i 1.2))))
+
+
+;; (defun facCountLine(unit tarif)
+;;   "Prend deux chiffres sous forme string et retourn un chiffre sous forme string"
+;;   (let (
+;; 	(unit_f
+
+
+
+;; 	 ))))
+;; (let (
+;;       (val "valeur")
+;;       )
+
+;;   (if val (message "hello")
+;;     nil)
+;;   )
+
+;; (let (
+;;       (testingt (list nil "150" "100" nil nil "yes" nil nil "true"))
+;;       )
+;;   (while testingt
+;;     (message (pop testingt)))
+;;   )
