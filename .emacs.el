@@ -1666,3 +1666,5 @@ for the current buffer's file name, and the line number at point."
                                ((inhibit-field-text-motion t))
                              (sort-subr nil 'forward-line 'end-of-line nil nil
                                         (lambda (s1 s2) (eq (random 2) 0)))))))
+;; * to make emacs stop complain about coding in python
+(define-coding-system-alias 'utf8 'utf-8) ;http://stackoverflow.com/questions/14031724/how-to-make-emacs-accept-utf-8-uppercase-encoding
