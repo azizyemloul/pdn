@@ -3,7 +3,6 @@
 (set-default-coding-systems 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-keyboard-coding-system 'utf-8)
-
 ;; * P@THS & REQUIRES
 ;; ** REQUIRES
 
@@ -25,6 +24,7 @@
 ;(require 'edit-server)
 ;(require 'sunrise-commander)
 (require 'outlined-zall-mode)
+(ido-mode t)
 
 ;; (add-to-list 'load-path "~/.emacs.d/addons/git-modes")
 ;; (add-to-list 'load-path "~/.emacs.d/addons/magit")
@@ -1056,6 +1056,7 @@ FLYSPELL-BUFFER."
 
 ;; * TABBAR
 (tabbar-mode)
+;(require 'tabbar-ruler)
 (setq tabbar-tab-label-function (lambda (tab) (format " %s " (car tab))))
 
 ;; Tabbar settings
