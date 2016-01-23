@@ -3,6 +3,9 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(Info-default-directory-list
+   (quote
+    ("/usr/local/share/info/" "/usr/share/info/" "/usr/local/share/info/")))
  '(TeX-modes (quote (tex-mode plain-tex-mode latex-mode doctex-mode)))
  '(ansi-color-faces-vector
    [default default default italic underline success warning error])
@@ -426,7 +429,7 @@ The document was typeset with
 
   Source: %u, %c
 
-  %i" :empty-lines 1))) t)
+  %i" :empty-lines 1))))
  '(org-clock-clocktable-default-properties (quote (:maxlevel 2 :scope file)))
  '(org-clock-into-drawer "LOGBOOK")
  '(org-clock-string-limit 5)
