@@ -970,118 +970,108 @@ Exemple:
 ;; 		      )
 ;; 		     )
 ;; 		    )
-;; * newfac
 
-(defun newfac()
+;; * count occurence of regex in string
+(defun count-occurences (regex string)
+  (recursive-count regex string 0))
+
+(defun recursive-count (regex string start)
+  (if (string-match regex string start)
+      (+ 1 (recursive-count regex string (match-end 0)))
+    0))
+
+;; * tempsAMontant
+(defun tempsAMontant(tp tar)
+  "Retourne le montant HT correpondant au temps fois tarif"
+  (if (and tp tar)
+      (format "%.2f" (* (string-to-number tar)  (string-to-number (tempsAunite tp))))
+    nil)
+  )
+;; * tempsAunite
+(defun tempsAunite(tp)
+  "Retourne le montant HT correpondant au temps fois tarif"
+  (if tp
+      (format "%.2f" (/ (org-time-string-to-seconds tp) 3600.0))
+    nil))
+)
+
+;; * letitbe
+(defun letitbe()
   (interactive)
-  ;; Dermato BelAbidi 045 26 62 98
-  ;; client_nom
-  ;; client_adress
-  ;; client_ville
-  ;; client_pays
-  ;; client_info_comp
-  ;; client_interlocuteur
-	  facture_n		(or (org-entry-get nil "facture_n") nil)
-	  facture_date		(or (org-entry-get nil "emic") (format-time-string "%d-%m-%Y"))
+  (setq resultat	(org-map-entries
+			 (lambda()
+			   (cons
+			    (cons "LIGNE" (if (looking-at org-complex-heading-regexp) (substring-no-properties (match-string 4))))
+			    (org-entry-properties))))
+	generalinf	(list
+			 (assoc "periode" (car resultat))
+			 (assoc "facture_n" (car resultat))
+			 (or (assoc "facture_date" (car resultat)) (cons  "facture_date" (format-time-string "%d-%m-%Y"))))
+	client		(substring (cdr (assoc "TAGS" (car resultat))) 1 -1)
+	collection	(nreverse (let (sortie)
+				    (dolist (i (cdr resultat) sortie)
+				      (push (list (substring (cdr (assoc "TAGS" i)) 1 -1)
+						  (cdr (assoc "Effort" i))
+						  (tempsAunite (cdr (assoc "Effort" i)))
+						  (cdr (assoc "LIGNE" i))
+						  (cdr (assoc "TARIF" i))
+						  (tempsAMontant (cdr (assoc "Effort" i)) (cdr (assoc "TARIF" i)))
+						  ) sortie))))
 
-	  ;;m1
-	  quantité_m1		(or (org-entry-get nil "q_m1") nil)
-	  m1			(or (org-entry-get nil "m1") "Prise de notes différée")
-	  pu_m1			(or (org-entry-get nil "pu_m1") nil)
-	  montant_m1		(if quantité_m1 ;; number
-				    (let (
-					  (quantité_m1_f (string-to-number quantité_m1))
-					  (pu_m1_f (string-to-number pu_m1))
-					  )
-				      (* quantité_m1_f pu_m1_f)))
-	  ;;m2
-
-	  (if (not (org-entry-get nil "m2"))
-
-	      (number-to-string nil)
-
-
-
-
-
-
-	  quantite_m2		(or (org-entry-get nil "q_m2") "")
-	  m2			(or (org-entry-get nil "m2")
-				    (if (looking-at org-complex-heading-regexp)
-					(setq w (substring-no-properties (match-string 4)))))
-	  pu_m2			(or (org-entry-get nil "pu_m1") (org-entry-get nil "TARIF") "45")
-	  montant_m2		(if quantite_m2 ;; number
-				    (let (
-					  (quantité_m2_f (string-to-number quantite_m2))
-					  (pu_m2_f (string-to-number pu_m2))
-					  )
-				      (* quantite_m2_f pu_m2_f)))
-	  ;;m3
-	  quantite_m3		(or (org-entry-get nil "q_m3") nil)
-	  m3			(or (org-entry-get nil "m3") nil)
-	  pu_m3			(or (org-entry-get nil "pu_m3") nil)
-	  montant_m3		(if quantite_m3 ;; number
-				    (let (
-					  (quantité_m3_f (string-to-number quantite_m3))
-					  (pu_m3_f (string-to-number pu_m3))
-					  )
-				      (* quantite_m3_f pu_m3_f)))
-	  ;;m4
-	  quantite_m4		(or (org-entry-get nil "q_m4") nil)
-	  m4			(or (org-entry-get nil "m4") nil)
-	  pu_m4			(or (org-entry-get nil "pu_m4") nil)
-	  montant_m4		(if quantite_m4 ;; number
-				    (let (
-					  (quantité_m4_f (string-to-number quantite_m4))
-					  (pu_m4_f (string-to-number pu_m4))
-					  )
-				      (* quantite_m4_f pu_m4_f)))
-	  ;;
-	  periode		(or (org-entry-get nil "periode") nil)
-	  ;;calc
-	  montant_ht_i		(apply '+ (list (or montant_m1 0) (or montant_m2 0) (or montant_m3 0) (or montant_m4 0)))
-	  montant_ht		(format "%.2f" montant_ht_i)
-	  tva			(format "%.2f" (* montant_ht_i 0.2))
-	  total_ttc		(format "%.2f" (* montant_ht_i 1.2))
-	  frais_ttc		(or (org-entry-get nil "frais") nil)
-	  montant_total		(if frais_ttc (format "%.2f" (+ (* montant_ht_i 1.2) frais_ttc)) (format "%.2f" (* montant_ht_i 1.2)))
-	  ;; ignore
-	  type_paiement
-	  type_reglement
-	  )
-
-(apply '+ (list (or nil 0) 3 4 (or nil 0)))
-
-
-(let
-    (
-     (frais_ttc 70.75)
-     (montant_ht_i 450.897)
+	core_facture	(nreverse (let (sortie)
+				    (dolist (i (cdr resultat) sortie)
+				      (let ((m (substring (cdr (assoc "TAGS" i)) 1 -1)))
+					(push (list (cons (concat "quantite_" m)	(or (tempsAunite (cdr (assoc "Effort" i))) ""))
+						    (cons m				(cdr (assoc "LIGNE" i)))
+						    (cons (concat "pu_" m)		(or (cdr (assoc "TARIF" i)) ""))
+						    (cons (concat "montant_" m)		(or (tempsAMontant (cdr (assoc "Effort" i)) (cdr (assoc "TARIF" i))) ""))
+						    ) sortie)))))
+	totaux		  (let ((valeur 0))
+			    (dolist (b collection valeur)
+			      (setq valeur (+ valeur (string-to-number (or (car (last b)) "")))))
+			    (let ((d (mapcar (lambda(x) (format "%.2f" x)) (list valeur (* valeur 0.2) (* valeur 1.2)))))
+			      (list (cons "montant_ht"  (nth 0 d)) (cons "tva"  (nth 1 d)) (cons "total_ttc"  (nth 2 d)) (cons "montant_total" (nth 2 d)))
+			      )
+			    )
+	clientinf	    (let ((c (progn
+				       (find-file-read-only "~/org/clients.org")
+				       (goto-char (point-min))
+				       (search-forward client)
+				       (org-entry-properties))))
+			      (kill-buffer "clients.org")
+			      (list
+			       (assoc "client_nom"	     c)
+			       (assoc "client_adress"	     c)
+			       (assoc "client_ville"	     c)
+			       (assoc "client_pays"	     c)
+			       (assoc "client_info_comp"     c)
+			       (assoc "client_interlocuteur" c)))
+	dest_dir	(concat (expand-file-name "~/org/RMS/")  (format-time-string "%m-%Y") "/")
+	)
+  (if (not (file-exists-p dest_dir)) (make-directory dest_dir))
+  (with-temp-buffer
+    (insert
+     "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+     "<xfdf xmlns=\"http://nous.adobe.com/xfdf/\" xml:space=\"default\">\n"
+     "<fields>\n")
+    (dolist (i clientinf)
+      (insert (concat "<field name=\"" (car i) "\"><value>" (cdr i) "</value></field>\n")))
+    (dolist (i generalinf)
+      (insert (concat "<field name=\"" (car i) "\"><value>" (cdr i) "</value></field>\n")))
+    (dolist (i core_facture)
+      (dolist (k i)
+	(insert (concat "<field name=\"" (car k) "\"><value>" (cdr k) "</value></field>\n"))))
+    (dolist (i totaux)
+      (insert (concat "<field name=\"" (car i) "\"><value>" (cdr i) "</value></field>\n")))
+    (insert "</fields></xfdf>")
+    (setq
+     basename_ (concat "RMS_" (cdr (assoc "client_nom" clientinf)) "_" (cdr (assoc "facture_n" generalinf)))
+     xfdfdoc (expand-file-name (concat dest_dir basename_ ".xfdf"))
+     xfdflink (concat basename_ ".xfdf")
+     pdf (expand-file-name (concat dest_dir basename_ ".pdf"))
      )
-(if frais_ttc
-    (format "%.2f" (+ (* montant_ht_i 1.2) frais_ttc))
-  (format "%.2f" (* montant_ht_i 1.2))))
-
-
-;; (defun facCountLine(unit tarif)
-;;   "Prend deux chiffres sous forme string et retourn un chiffre sous forme string"
-;;   (let (
-;; 	(unit_f
-
-
-
-;; 	 ))))
-;; (let (
-;;       (val "valeur")
-;;       )
-
-;;   (if val (message "hello")
-;;     nil)
-;;   )
-
-;; (let (
-;;       (testingt (list nil "150" "100" nil nil "yes" nil nil "true"))
-;;       )
-;;   (while testingt
-;;     (message (pop testingt)))
-;;   )
+    (append-to-file (point-min) (point-max) xfdfdoc)
+    )
+  (call-process "pdftk" nil "*scratch*" nil (expand-file-name "~/RMS/facture_fin.pdf") "fill_form" xfdfdoc "output" pdf "flatten")
+  (start-process "my-process2" "*scratch*"  "evince" pdf)
+  )
