@@ -136,7 +136,7 @@ format."
   (let
       (
       					; mettre les fichiers audios dans le répertoire courant dans une liste nommée nouveaux-fichiers
-       (nouveaux-fichiers (directory-files dirToScan t "\\(wma\\|mp3\\|wav\\|WMA\\|MP3\\|WAV\\|flv\\|ogg\\|avi\\|wmv\\|mp4\\)$")) ;
+       (nouveaux-fichiers (directory-files dirToScan t "\\(wma\\|mp3\\|wav\\|WMA\\|MP3\\|WAV\\|flv\\|ogg\\|avi\\|wmv\\|mp4\\|m4a\\)$")) ;
       					; mettre les médias déjà consignés dans le fichier courant dans une liste nommée fichiers-enregistrés
        (fichiers-enregistrés  (org-map-entries
       			       (lambda ()
