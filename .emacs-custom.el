@@ -360,6 +360,9 @@ The document was typeset with
  '(ecb-source-path (quote (("/home/aziz/org/archive/2012-07/org" "org"))))
  '(ecb-use-speedbar-instead-native-tree-buffer t)
  '(ecb-windows-width 0 t)
+'(elfeed-feeds
+(quote
+ ("http://igpro.ddns.net/dashboard/projects.atom?private_token=MzhihAB9y1gF7cPmKywp")))
  '(european-calendar-style t)
  '(flyspell-abbrev-p t)
  '(flyspell-default-dictionary "francais")
