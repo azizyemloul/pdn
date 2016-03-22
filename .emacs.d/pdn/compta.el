@@ -762,10 +762,10 @@ Exemple:
 ;; * letitbe
 (defun letitbe()
   (interactive)
-  (setq resultat	(org-map-entries
+  (setq resultat	(org-map-entries ;; try org-map⁻tree
 			 (lambda()
 			   (cons
-			    (cons "LIGNE" (if (looking-at org-complex-heading-regexp) (substring-no-properties (match-string 4))))
+			    (cons "LIGNE" (if (looking-at org-complex-heading-regexp) (substring-no-properties (match-string 4)))) ;; (substring-no-properties (org-get-heading t t))
 			    (org-entry-properties))))
 	generalinf	(list
 			 (assoc "periode" (car resultat))
@@ -810,7 +810,7 @@ Exemple:
 			   (assoc "client_pays"		c)
 			   (assoc "client_info_comp"    c)
 			   (assoc "client_interlocuteur" c)))
-	dest_dir	(concat (expand-file-name "~/org/RMS/")  (format-time-string "%m-%Y") "/")
+	dest_dir	(concat (expand-file-name "~/org/RMS/")  (or (substring (cdr (assoc "facture_date" generalinf)) 3) (format-time-string "%m-%Y")) "/")
 	)
   (if (not (file-exists-p dest_dir)) (make-directory dest_dir))
   (with-temp-buffer
